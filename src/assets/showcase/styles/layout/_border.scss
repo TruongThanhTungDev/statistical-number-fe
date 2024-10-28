@@ -1,0 +1,6 @@
+$base-border: 2px;
+@for $i from 1 through 100 {
+  .rounded-#{$i} {
+    border-radius: #{$i * $base-border}!important;
+  }
+}

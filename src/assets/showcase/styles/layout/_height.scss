@@ -1,0 +1,5 @@
+@for $i from 1 through 10000 {
+  .h-\[#{$i}px\] {
+    height: #{$i}px!important;
+  }
+}

@@ -1,0 +1,29 @@
+$primary: #676CAE;
+$warning: #FEC887;
+$danger: #FE8787;
+$danger-2: #EB1D23;
+
+.text-primary {
+  color: $primary!important;
+}
+.text-danger {
+  color: $danger!important;
+}
+.text-danger-2 {
+  color: $danger-2!important;
+}
+.text-warning {
+  color: $warning!important;
+}
+.bg-primary {
+  background-color: $primary!important;
+}
+.bg-danger {
+  background-color: $danger!important;
+}
+.bg-danger-2 {
+  background-color: $danger-2!important;
+}
+.bg-warning {
+  background-color: $warning!important;
+}
