@@ -1,3 +1,67 @@
-<div>
-  aâaa
+<div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
+  <div class="fz-5 font-bold">
+    Tìm kiếm
+  </div>
+  <div class="border-bottom-1 pb-4 border-gray-200">
+    <div class="flex flex-column gap-2">
+      <label for="fixNumber">Số cố định</label>
+      <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="soCoDinhList" placeholder="Chọn" />
+      <em>
+        66; 62; 33; 33; 66; 27; 89; 46; 89; 56; 77; 88; 12; 34; 56; 78; 35; 22; 11; 04; 60
+      </em>
+    </div>
+  </div>
+  <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Ngưỡng cực đại</label>
+        <input type="text" pInputText placeholder="Nhập ngưỡng cực đại" />
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Điểm gan</label>
+        <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="diemGanList" placeholder="Chọn điểm gan" />
+      </div>
+    </div>
+    <div>
+      <button
+        class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Kết
+        quả</button>
+      <em>
+        66; 62; 33; 33; 66; 27; 89; 46; 89; 56; 77; 88; 12; 34; 56; 78; 35; 22; 11; 04; 60
+      </em>
+    </div>
+  </div>
+  <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Tỉnh</label>
+        <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn tỉnh" />
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Từ ngày</label>
+        <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Đến ngày</label>
+        <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-column gap-2">
+        <label for="fixNumber">Dàn đặc biệt muốn thống kê</label>
+        <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn" />
+      </div>
+    </div>
+    <div>
+      <button
+        class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+        kiếm</button>
+    </div>
+  </div>
 </div>

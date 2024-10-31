@@ -6,17 +6,17 @@ import { NgModule } from '@angular/core';
 export const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('../pages/login/login.module').then((m) => m.LoginModule)
+    component: LoginComponent
   },
   {
     path: '',
     component: AppMainComponent,
-    children: []
+    loadChildren: () => import('../layout/app.main.module').then((m) => m.AppMainModule)
   },
   { path: '**', redirectTo: '/notfound' }
 ];
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
-//   exports: [RouterModule]
-// })
-// export class AppRoutingModule {}
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

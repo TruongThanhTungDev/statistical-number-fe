@@ -11,13 +11,6 @@ import { AppModule } from './app.module';
 @Component({
   selector: 'app-main',
   templateUrl: './app.main.component.html',
-  standalone: true,
-  imports: [RouterOutlet, CommonModule, AppMenuComponent, AppTopBarComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainComponent {
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private configService: AppConfigService
-  ) {}
 }

@@ -12,25 +12,51 @@ import { AppMenuComponent } from "./menu/app.menu.component";
 import { AppTopBarComponent } from "./topbar/app.topbar.component";
 // import { AppRoutingModule } from "./app.routes";
 import { AppComponent } from "./app.component";
-import { routes } from "./app.routes";
+import { AppRoutingModule, routes } from "./app.routes";
 import { BrowserModule } from "@angular/platform-browser";
-
+import { AppMainModule } from "./app.main.module";
+import { AvatarGroupModule } from "primeng/avatargroup";
+import { AvatarModule } from "primeng/avatar";
+import { OverlayPanelModule } from "primeng/overlaypanel";
+import { InputIconModule } from "primeng/inputicon";
+import { IconFieldModule } from "primeng/iconfield";
+import { ButtonModule } from "primeng/button";
+import { InputGroupModule } from "primeng/inputgroup";
+import { InputGroupAddonModule } from "primeng/inputgroupaddon";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CardModule } from 'primeng/card';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { CalendarModule } from 'primeng/calendar';
+import { ScrollerModule } from 'primeng/scroller';
 @NgModule({
-  declarations: [SidebarComponent, AppComponent],
+  declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
   imports: [
-    // AppRoutingModule,
     FormsModule,
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppMainComponent,
-    AppTopBarComponent,
     AppMenuComponent,
     InputTextModule,
     LoginModule,
     TabMenuModule,
     CommonModule,
-    RouterModule.forRoot(routes)
+    AppRoutingModule,
+    AvatarModule,
+    AvatarGroupModule,
+    OverlayPanelModule,
+    IconFieldModule,
+    InputIconModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    InputTextModule,
+    IconFieldModule,
+    InputIconModule,
+    ButtonModule,
+    BrowserAnimationsModule,
+    CardModule,
+    TreeSelectModule,
+    CalendarModule,
+    ScrollerModule
   ],
   providers: [
     {
