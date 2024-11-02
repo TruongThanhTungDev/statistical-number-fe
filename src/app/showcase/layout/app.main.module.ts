@@ -16,6 +16,12 @@ import { RouterModule } from "@angular/router";
 import { AppMainRoutes } from "./app.main.routes";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { HomeComponent } from "@pages/home/home.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CalendarModule } from "primeng/calendar";
+import { CardModule } from "primeng/card";
+import { ScrollerModule } from "primeng/scroller";
+import { TreeSelectModule } from "primeng/treeselect";
+import { StatisticComponent } from "@pages/statistic/statistic.component";
 
 @NgModule({
   imports: [
@@ -25,16 +31,22 @@ import { HomeComponent } from "@pages/home/home.component";
     StyleClassModule,
     InputGroupModule,
     InputGroupAddonModule,
-    InputTextModule,
-    IconFieldModule,
-    InputIconModule,
     ButtonModule,
     AvatarModule,
     AvatarGroupModule,
     OverlayPanelModule,
-    RouterModule.forChild(AppMainRoutes)
+    RouterModule.forChild(AppMainRoutes),
+    InputTextModule,
+    IconFieldModule,
+    InputIconModule,
+    ButtonModule,
+    // BrowserAnimationsModule,
+    CardModule,
+    TreeSelectModule,
+    CalendarModule,
+    ScrollerModule,
   ],
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, StatisticComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainModule {}

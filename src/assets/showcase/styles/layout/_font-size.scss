@@ -1,5 +1,5 @@
 $base-font-size: 4px;
-@for $i from 1 through 10 {
+@for $i from 1 through 100 {
   .fz-#{$i} {
     font-size: $base-font-size * $i;
   }

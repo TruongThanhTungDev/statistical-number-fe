@@ -15,12 +15,11 @@ import { Code } from '@domain/code';
 })
 export class AnimationsDoc {
     code: Code = {
-        typescript: `import { BrowserModule } from '@angular/platform-browser';
+        typescript: `
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
-        BrowserModule,
         BrowserAnimationsModule,
         //...
     ],

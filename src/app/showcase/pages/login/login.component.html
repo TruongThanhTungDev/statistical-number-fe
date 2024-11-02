@@ -8,13 +8,13 @@
     </div>
     <div class="mb-4">
       <div class="mb-4">
-        <input type="text" pInputText class="w-full h-[60px]" placeholder="Tài khoản" />
+        <input type="text" pInputText class="w-full h-[60px]" placeholder="Tài khoản" [(ngModel)]="username"/>
       </div>
       <div>
-        <input type="password" pInputText class="w-full h-[60px]" placeholder="Mật khẩu" />
+        <input type="password" pInputText class="w-full h-[60px]" placeholder="Mật khẩu" [(ngModel)]="password"/>
       </div>
     </div>
-    <button class="w-full p-4 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">Đăng nhập</button>
+    <button (click)="login()" class="w-full p-4 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">Đăng nhập</button>
     <div class="text-center">
       Chưa có tài khoản? <span class="font-bold hover:underline transition-all transition-duration-300 cursor-pointer">Đăng ký ngay!</span>
     </div>

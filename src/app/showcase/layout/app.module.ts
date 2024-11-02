@@ -3,7 +3,7 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CommonModule, IMAGE_CONFIG } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, RouterOutlet } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { LoginModule } from "@pages/login/login.module";
 import { InputTextModule } from "primeng/inputtext";
 import { TabMenuModule } from "primeng/tabmenu";
@@ -28,18 +28,19 @@ import { CardModule } from 'primeng/card';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { CalendarModule } from 'primeng/calendar';
 import { ScrollerModule } from 'primeng/scroller';
+import { HeadersInterceptor } from "./headers-intercepter";
 @NgModule({
   declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
   imports: [
     FormsModule,
-    BrowserModule,
+    // BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppMenuComponent,
     InputTextModule,
     LoginModule,
     TabMenuModule,
-    CommonModule,
     AppRoutingModule,
     AvatarModule,
     AvatarGroupModule,
@@ -56,7 +57,7 @@ import { ScrollerModule } from 'primeng/scroller';
     CardModule,
     TreeSelectModule,
     CalendarModule,
-    ScrollerModule
+    ScrollerModule,
   ],
   providers: [
     {
@@ -65,7 +66,8 @@ import { ScrollerModule } from 'primeng/scroller';
         disableImageSizeWarning: true,
         disableImageLazyLoadWarning: true
       }
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1,23 +1,94 @@
-<div>
-  <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
-    Thống kê chu kỳ dàn đặc biệt Truyền thống
+<div class="flex gap-4 container-body">
+  <div class="shadow-2 bg-white p-4 border-round-2xl w-[487px] flex flex-col">
+    <div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
+      <div class="fz-5 font-bold">
+        Tìm kiếm
+      </div>
+      <div class="border-bottom-1 pb-4 border-gray-200">
+        <div class="flex flex-column gap-2">
+          <label for="fixNumber">Số cố định</label>
+          <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="soCoDinhList" placeholder="Chọn" />
+          <em>
+            66; 62; 33; 33; 66; 27; 89; 46; 89; 56; 77; 88; 12; 34; 56; 78; 35; 22; 11; 04; 60
+          </em>
+        </div>
+      </div>
+      <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Ngưỡng cực đại</label>
+            <input type="text" pInputText placeholder="Nhập ngưỡng cực đại" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Điểm gan</label>
+            <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="diemGanList" placeholder="Chọn điểm gan" [(ngModel)]="quantity"/>
+          </div>
+        </div>
+        <div>
+          <button (click)="searchStatisticsTodayNumber()"
+            class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Kết
+            quả</button>
+          <em>
+            66; 62; 33; 33; 66; 27; 89; 46; 89; 56; 77; 88; 12; 34; 56; 78; 35; 22; 11; 04; 60
+          </em>
+        </div>
+      </div>
+      <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Tỉnh</label>
+            <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn tỉnh" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Từ ngày</label>
+            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Đến ngày</label>
+            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Dàn đặc biệt muốn thống kê</label>
+            <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn" />
+          </div>
+        </div>
+        <div>
+          <button
+            class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+            kiếm</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-column gap-4">
-    <div>
-      Dàn số <span class="font-bold text-danger-2">01</span>
+  <div class="shadow-2 bg-white p-4 border-round-2xl w-full">
+    <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
+      Thống kê chu kỳ dàn đặc biệt Truyền thống
     </div>
-    <div>
-      Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">01-01-2000</span> đến ngày <span class="font-bold text-primary">16-10-2024</span>
-    </div>
-    <div>
-      Ngưỡng cực đại không xuất hiện dàn số là 504 ngày (kể cả ngày về), từ <span class="font-bold text-primary">11-07-2024</span> (giải đặc biệt - 02801) đến <span class="font-bold text-primary">01-12-2023</span>
-      (giải đặc biệt - 12301)
-    </div>
-    <div>
-      Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span class="font-bold text-primary">23-06-2024</span> (giải đặc biệt - 28501)
-    </div>
-    <div>
-      Điểm gan đến nay là: <span class="font-bold text-danger-2">114</span> ngày (Không tính ngày về gần nhất), là ngày: <span class="font-bold text-primary">23-06-2024</span> (giải đặc biệt - 28501)
+    <div *ngIf="data" class="flex flex-column gap-4">
+      <div>
+        Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
+      </div>
+      <div>
+        Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span> đến ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+      </div>
+      <div>
+        Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày (kể cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt - 02801) đến <span class="font-bold text-primary">{{data.maxEndDate}}</span>
+        (giải đặc biệt - 12301)
+      </div>
+      <div>
+        Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
+      </div>
+      <div>
+        Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính ngày về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
+      </div>
     </div>
   </div>
 </div>
