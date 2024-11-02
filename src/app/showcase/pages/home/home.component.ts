@@ -2,6 +2,7 @@ import { HttpResponse } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { ApiServices } from "@layout/api.services";
 import { Plugins } from "../../utils/plugins";
+import moment from "moment";
 
 @Component({
   selector: 'home-component',
@@ -9,6 +10,7 @@ import { Plugins } from "../../utils/plugins";
 })
 export class HomeComponent {
   REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number'
+  REQUEST_STATISTIC = 'api/v1/statistic'
   soCoDinhList: any[] = [
     {
       key: '0',
@@ -82,6 +84,7 @@ export class HomeComponent {
   startDate = new Date();
   endDate = new Date();
   quantity: any
+  listQuantity: any
   data: any
   plugins = new Plugins()
   constructor(
@@ -109,5 +112,31 @@ export class HomeComponent {
         console.error()
       }
     )
+  }
+  searchStatistic() {
+    const payload = {
+      startDate: this.startDate ? +moment(this.startDate).format('YYYYMMDD') : '',
+      endDate : this.endDate ? +moment(this.endDate).format('YYYYMMDD') : '',
+      data: this.listQuantity ? this.listQuantity.trim().split(",").map((item: any) => +item) : ''
+    }
+    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe(
+      (res: HttpResponse<any>) => {
+        if(res.body.code === 200) {
+          this.data = this.formatData(res.body.result)
+        }
+      }
+    )
+  }
+  formatData(dataOrigin: any) {
+    if(!dataOrigin) return null
+    return {
+      ...dataOrigin,
+      data: dataOrigin.data.join(", "),
+      startDate: this.plugins.formatDateWithType(dataOrigin.startDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+      endDate: this.plugins.formatDateWithType(dataOrigin.endDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+      maxStartDate: this.plugins.formatDateWithType(dataOrigin.maxStartDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+      maxEndDate: this.plugins.formatDateWithType(dataOrigin.maxEndDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+      lastDate: this.plugins.formatDateWithType(dataOrigin.lastDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+    }
   }
 }

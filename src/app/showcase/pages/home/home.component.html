@@ -57,11 +57,11 @@
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Dàn đặc biệt muốn thống kê</label>
-            <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn" />
+            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="listQuantity"/>
           </div>
         </div>
         <div>
-          <button
+          <button (click)="searchStatistic()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>
