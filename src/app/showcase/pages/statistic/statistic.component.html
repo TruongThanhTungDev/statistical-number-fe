@@ -38,7 +38,7 @@
     <div *ngIf="listData && listData.length" class="content-scroll">
       <div class="flex gap-4 align-items-center flex-wrap">
         <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
-          <div class="bg-danger text-center p-3 text-white rounded-6" [class]="item.isHighlight ? 'bg-warning' : ''">
+          <div class="bg-danger text-center p-3 text-white rounded-6" [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
             {{item.date}}
           </div>
           <div class="fz-18 p-4 text-danger text-center font-bold">

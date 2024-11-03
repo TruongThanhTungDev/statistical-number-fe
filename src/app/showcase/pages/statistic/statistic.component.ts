@@ -13,7 +13,8 @@ export class StatisticComponent implements OnInit{
   startDate: any
   endDate: any
   quantity: any
-  listData: any[]
+  listData: any[] = []
+  listDataSearch: any[] = []
   plugins = new Plugins()
   REQUEST_URL = 'api/v1/search'
   constructor(
@@ -60,16 +61,7 @@ export class StatisticComponent implements OnInit{
               ...item,
               isHighlight: false
             }))
-            const data = res.body.result.content
-            data.forEach(ele => {
-              const index = this.listData.findIndex(a => ele.date === +moment(a.date, 'DD/MM/YYYY').format('YYYYMMDD') && a.value == ele.value)
-              if(index > -1) {
-                this.listData[index].isHighlight = false
-              } else {
-                this.listData[index].isHighlight = true
-                console.log(this.listData[index])
-              }
-            })
+            this.listDataSearch = res.body.result.content
           }
         }
       }
@@ -82,5 +74,10 @@ export class StatisticComponent implements OnInit{
     if(this.startDate) arr.push(`date>=${+moment(this.startDate).format('YYYYMMDD')}`)
     if(this.endDate) arr.push(`date<=${+moment(this.endDate).format('YYYYMMDD')}`)
     return arr.join(';')
+  }
+  checkingMarkStatistic(data: any) {
+    const result = this.listDataSearch.find(item => item.value === data.value && item.date === +this.plugins.formatDateWithType(data.date, 'DD/MM/YYYY', 'YYYYMMDD'))
+    if (result) return false
+    return true
   }
 }
