@@ -77,7 +77,7 @@ export class HomeComponent {
       ]
     }
   ];
-  diemGanList = Array.from({ length: 10 }, (_, i) => {
+  listSo = Array.from({ length: 10 }, (_, i) => {
     const value = 10 + i * 5;
     return { label: value, value: value, key: value };
   });

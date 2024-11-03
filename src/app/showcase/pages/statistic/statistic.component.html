@@ -8,7 +8,7 @@
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Số</label>
-            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5"/>
+            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity"/>
           </div>
         </div>
         <div>
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div>
-          <button
+          <button (click)="searchStatistic()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>
@@ -35,21 +35,15 @@
     <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
       Thống kê từ ngày dd/mm/yyyy đến ngày dd/mm/yyyy
     </div>
-    <div class="flex gap-4 align-items-center flex-wrap">
-      <div class="border-1 border-gray-200 rounded-6">
-        <div class="bg-danger text-center p-3 text-white rounded-6">
-          16/10/2024
-        </div>
-        <div class="fz-20 p-4 text-danger text-center font-bold">
-          76
-        </div>
-      </div>
-      <div class="border-1 border-gray-200 rounded-6">
-        <div class="bg-danger text-center p-3 text-white rounded-6">
-          16/10/2024
-        </div>
-        <div class="fz-20 p-4 text-danger text-center font-bold">
-          76
+    <div *ngIf="listData && listData.length" class="content-scroll">
+      <div class="flex gap-4 align-items-center flex-wrap">
+        <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
+          <div class="bg-danger text-center p-3 text-white rounded-6" [class]="item.isHighlight ? 'bg-warning' : ''">
+            {{item.date}}
+          </div>
+          <div class="fz-18 p-4 text-danger text-center font-bold">
+            {{item.value}}
+          </div>
         </div>
       </div>
     </div>
