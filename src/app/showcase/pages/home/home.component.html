@@ -14,12 +14,12 @@
         </div>
       </div>
       <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
-        <div>
+        <!-- <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Ngưỡng cực đại</label>
             <input type="text" pInputText placeholder="Nhập ngưỡng cực đại" />
           </div>
-        </div>
+        </div> -->
         <!-- <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Điểm gan</label>
@@ -51,13 +51,13 @@
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Từ ngày</label>
-            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày"/>
           </div>
         </div>
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Đến ngày</label>
-            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày"/>
           </div>
         </div>
         <div>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div>
-          <button (click)="searchStatistic()"
+          <button pRipple  (click)="searchStatistic()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>
@@ -78,23 +78,38 @@
     <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
       Thống kê chu kỳ dàn đặc biệt Truyền thống
     </div>
-    <div *ngIf="data" class="flex flex-column gap-4">
-      <div>
-        Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
+    <div *ngIf="!isLoading">
+      <div *ngIf="data" class="flex flex-column gap-4">
+        <div>
+          Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
+        </div>
+        <div>
+          Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span> đến
+          ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+        </div>
+        <div>
+          Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày (kể cả ngày về), từ <span
+            class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt - 02801) đến <span
+            class="font-bold text-primary">{{data.maxEndDate}}</span>
+          (giải đặc biệt - 12301)
+        </div>
+        <div>
+          Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
+            class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
+        </div>
+        <div>
+          Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính ngày
+          về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
+        </div>
       </div>
-      <div>
-        Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span> đến ngày <span class="font-bold text-primary">{{data.endDate}}</span>
-      </div>
-      <div>
-        Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày (kể cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt - 02801) đến <span class="font-bold text-primary">{{data.maxEndDate}}</span>
-        (giải đặc biệt - 12301)
-      </div>
-      <div>
-        Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
-      </div>
-      <div>
-        Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính ngày về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - 28501)
-      </div>
+    </div>
+    <div *ngIf="isLoading">
+      <p-skeleton styleClass="mb-4" />
+      <p-skeleton styleClass="mb-4" />
+      <p-skeleton styleClass="mb-4" />
+      <p-skeleton styleClass="mb-4" />
+      <p-skeleton width="10rem" styleClass="mb-4" />
+      <p-skeleton width="10rem" styleClass="mb-4" />
     </div>
   </div>
 </div>

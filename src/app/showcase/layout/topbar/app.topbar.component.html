@@ -22,7 +22,7 @@
     <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" styleClass="mr-2 border-1 border-blue-500" size="large"
       shape="circle" (click)="op.toggle($event)"/>
     <p-overlayPanel #op>
-      <div class="flex align-items-center gap-4 p-2 hover:bg-gray-100 hover:font-bold transition-all transition-duration-300 cursor-pointer rounded-2">
+      <div class="flex align-items-center gap-4 p-2 hover:bg-gray-100 hover:font-bold transition-all transition-duration-300 cursor-pointer rounded-2" (click)="logout()">
         <div>Đăng xuất</div>
         <i class="pi pi-sign-out text-red-500"></i>
       </div>

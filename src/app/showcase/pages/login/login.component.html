@@ -14,7 +14,11 @@
         <input type="password" pInputText class="w-full h-[60px]" placeholder="Mật khẩu" [(ngModel)]="password"/>
       </div>
     </div>
-    <button (click)="login()" class="w-full p-4 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">Đăng nhập</button>
+    <button *ngIf="!isLoading" (click)="login()" class="w-full p-4 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">Đăng nhập</button>
+    <button *ngIf="isLoading" 
+      class="w-full bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" />
+    </button>
     <div class="text-center">
       Chưa có tài khoản? <span class="font-bold hover:underline transition-all transition-duration-300 cursor-pointer">Đăng ký ngay!</span>
     </div>

@@ -14,17 +14,17 @@
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Từ ngày</label>
-            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày"/>
           </div>
         </div>
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Đến ngày</label>
-            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" />
+            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày"/>
           </div>
         </div>
         <div>
-          <button (click)="searchStatistic()"
+          <button pRipple (click)="searchStatistic()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>
@@ -35,17 +35,32 @@
     <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
       Thống kê từ ngày dd/mm/yyyy đến ngày dd/mm/yyyy
     </div>
-    <div *ngIf="listData && listData.length" class="content-scroll">
-      <div class="flex gap-4 align-items-center flex-wrap">
-        <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
-          <div class="bg-danger text-center p-3 text-white rounded-6" [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
-            {{item.date}}
-          </div>
-          <div class="fz-18 p-4 text-danger text-center font-bold">
-            {{item.value}}
+    <div *ngIf="!isLoading">
+      <div *ngIf="listData && listData.length" class="content-scroll">
+        <div class="flex gap-4 align-items-center flex-wrap">
+          <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
+            <div class="bg-danger text-center p-3 text-white rounded-6"
+              [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
+              {{item.date}}
+            </div>
+            <div class="fz-18 p-4 text-danger text-center font-bold">
+              {{item.value}}
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
+      <p-skeleton size="10rem" />
     </div>
   </div>
 </div>

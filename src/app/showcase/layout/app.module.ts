@@ -29,6 +29,8 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { CalendarModule } from 'primeng/calendar';
 import { ScrollerModule } from 'primeng/scroller';
 import { HeadersInterceptor } from "./headers-intercepter";
+import { MessageService } from "primeng/api";
+import { ToastModule } from "primeng/toast";
 @NgModule({
   declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
   imports: [
@@ -58,6 +60,7 @@ import { HeadersInterceptor } from "./headers-intercepter";
     TreeSelectModule,
     CalendarModule,
     ScrollerModule,
+    ToastModule
   ],
   providers: [
     {
@@ -68,6 +71,7 @@ import { HeadersInterceptor } from "./headers-intercepter";
       }
     },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+    MessageService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

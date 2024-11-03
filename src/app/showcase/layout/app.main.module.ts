@@ -22,7 +22,10 @@ import { CardModule } from "primeng/card";
 import { ScrollerModule } from "primeng/scroller";
 import { TreeSelectModule } from "primeng/treeselect";
 import { StatisticComponent } from "@pages/statistic/statistic.component";
-
+import { SkeletonModule } from 'primeng/skeleton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   imports: [
     CommonModule,
@@ -45,6 +48,9 @@ import { StatisticComponent } from "@pages/statistic/statistic.component";
     TreeSelectModule,
     CalendarModule,
     ScrollerModule,
+    SkeletonModule,
+    ProgressSpinnerModule,
+    RippleModule,
   ],
   declarations: [HomeComponent, StatisticComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

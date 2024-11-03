@@ -5,9 +5,9 @@ import { LoginComponent } from './login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @NgModule({
-  imports: [CommonModule, FormsModule, HttpClientModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, InputTextModule, ButtonModule, ProgressSpinnerModule],
   declarations: [LoginComponent],
   exports: [LoginComponent],
   bootstrap: [LoginComponent]

@@ -3,14 +3,15 @@ import { Component } from "@angular/core";
 import { ApiServices } from "@layout/api.services";
 import { Plugins } from "../../utils/plugins";
 import moment from "moment";
+import { ToastService } from "../../utils/toast.service";
 
 @Component({
   selector: 'home-component',
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number'
-  REQUEST_STATISTIC = 'api/v1/statistic'
+  REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number';
+  REQUEST_STATISTIC = 'api/v1/statistic';
   soCoDinhList: any[] = [
     {
       key: '0',
@@ -81,62 +82,92 @@ export class HomeComponent {
     const value = 10 + i * 5;
     return { label: value, value: value, key: value };
   });
-  startDate = new Date();
-  endDate = new Date();
-  quantity: any
-  listQuantity: any
-  data: any
-  plugins = new Plugins()
+  startDate: any;
+  endDate: any;
+  minDate: any;
+  maxDate: any;
+  quantity: any;
+  listQuantity: any;
+  data: any;
+  plugins = new Plugins();
+  isLoading = false
   constructor(
-    private apiService: ApiServices
-  ) {}
+    private apiService: ApiServices,
+    private toast: ToastService
+  ) { }
   searchStatisticsTodayNumber() {
+    this.isLoading = true
     const payload = {
       quantity: this.quantity ? this.quantity.value : ''
-    }
+    };
     this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '').subscribe(
       (res: HttpResponse<any>) => {
-        if(res.body.code == 200) {
+        if (res.body.code == 200) {
+          this.isLoading = false
           this.data = {
             ...res.body.result,
-            data: res.body.result.data.join(", "),
+            data: res.body.result.data.join(', '),
             startDate: this.plugins.formatDateWithType(res.body.result.startDate, 'YYYYMMDD', 'DD-MM-YYYY'),
             endDate: this.plugins.formatDateWithType(res.body.result.endDate, 'YYYYMMDD', 'DD-MM-YYYY'),
             maxStartDate: this.plugins.formatDateWithType(res.body.result.maxStartDate, 'YYYYMMDD', 'DD-MM-YYYY'),
             maxEndDate: this.plugins.formatDateWithType(res.body.result.maxEndDate, 'YYYYMMDD', 'DD-MM-YYYY'),
-            lastDate: this.plugins.formatDateWithType(res.body.result.lastDate, 'YYYYMMDD', 'DD-MM-YYYY'),
-          }
+            lastDate: this.plugins.formatDateWithType(res.body.result.lastDate, 'YYYYMMDD', 'DD-MM-YYYY')
+          };
+          this.toast.success('Tìm kiếm dữ liệu thành công!');
+        } else {
+          this.isLoading = false
+          this.toast.error(res.body.result)
         }
       },
       () => {
-        console.error()
+        this.isLoading = false;
+        console.error();
       }
-    )
+    );
   }
   searchStatistic() {
+    this.isLoading = true;
     const payload = {
       startDate: this.startDate ? +moment(this.startDate).format('YYYYMMDD') : '',
-      endDate : this.endDate ? +moment(this.endDate).format('YYYYMMDD') : '',
-      data: this.listQuantity ? this.listQuantity.trim().split(",").map((item: any) => +item) : ''
-    }
-    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe(
-      (res: HttpResponse<any>) => {
-        if(res.body.code === 200) {
-          this.data = this.formatData(res.body.result)
-        }
+      endDate: this.endDate ? +moment(this.endDate).format('YYYYMMDD') : '',
+      data: this.listQuantity
+        ? this.listQuantity
+            .trim()
+            .split(',')
+            .map((item: any) => +item)
+        : ''
+    };
+    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe((res: HttpResponse<any>) => {
+      if (res.body.code === 200) {
+        this.isLoading = false;
+        this.data = this.formatData(res.body.result);
+        this.toast.success('Tìm kiếm dữ liệu thành công!')
+      } else {
+        this.isLoading = false;
+        this.toast.error(res.body.result);
       }
-    )
+    },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
   formatData(dataOrigin: any) {
-    if(!dataOrigin) return null
+    if (!dataOrigin) return null;
     return {
       ...dataOrigin,
-      data: dataOrigin.data.join(", "),
+      data: dataOrigin.data.join(', '),
       startDate: this.plugins.formatDateWithType(dataOrigin.startDate, 'YYYYMMDD', 'DD-MM-YYYY'),
       endDate: this.plugins.formatDateWithType(dataOrigin.endDate, 'YYYYMMDD', 'DD-MM-YYYY'),
       maxStartDate: this.plugins.formatDateWithType(dataOrigin.maxStartDate, 'YYYYMMDD', 'DD-MM-YYYY'),
       maxEndDate: this.plugins.formatDateWithType(dataOrigin.maxEndDate, 'YYYYMMDD', 'DD-MM-YYYY'),
-      lastDate: this.plugins.formatDateWithType(dataOrigin.lastDate, 'YYYYMMDD', 'DD-MM-YYYY'),
-    }
+      lastDate: this.plugins.formatDateWithType(dataOrigin.lastDate, 'YYYYMMDD', 'DD-MM-YYYY')
+    };
+  }
+  selectStartDate(event: Date) {
+    this.minDate = event;
+  }
+  selectEndDate(event: Date) {
+    this.maxDate = event;
   }
 }
