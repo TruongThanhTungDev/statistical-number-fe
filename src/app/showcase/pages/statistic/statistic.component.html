@@ -35,8 +35,8 @@
     <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
       Thống kê từ ngày dd/mm/yyyy đến ngày dd/mm/yyyy
     </div>
-    <div *ngIf="!isLoading">
-      <div *ngIf="listData && listData.length" class="content-scroll">
+    <div *ngIf="!isLoading" class="content-scroll">
+      <div *ngIf="listData && listData.length">
         <div class="flex gap-4 align-items-center flex-wrap">
           <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
             <div class="bg-danger text-center p-3 text-white rounded-6"
