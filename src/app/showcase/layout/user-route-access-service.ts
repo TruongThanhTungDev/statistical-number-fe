@@ -18,8 +18,7 @@ export class UserRouteAccessService implements CanActivate {
 
   checkLogin(): boolean {
     const token = localStorage.getItem('token')
-    const warehouseId = localStorage.getItem('warehouseId')
-    if (!token && !warehouseId) return false;
+    if (!token) return false;
     return true;
   }
 }

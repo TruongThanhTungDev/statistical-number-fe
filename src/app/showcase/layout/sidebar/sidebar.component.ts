@@ -1,80 +1,55 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'sidebar-component',
-  templateUrl: './sidebar.component.html'
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['sidebar.component.scss']
 })
 export class SidebarComponent {
-  soCoDinhList: any[] = [
+  listMenu: any[] = [
     {
-      key: '0',
-      label: 'Documents',
-      data: 'Documents Folder',
-      icon: 'pi pi-fw pi-inbox',
-      children: [
-        {
-          key: '0-0',
-          label: 'Work',
-          data: 'Work Folder',
-          icon: 'pi pi-fw pi-cog',
-          children: [
-            { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
-            { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
-          ]
-        },
-        {
-          key: '0-1',
-          label: 'Home',
-          data: 'Home Folder',
-          icon: 'pi pi-fw pi-home',
-          children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
-        }
-      ]
+      key: 'quan-ly-tai-khoan',
+      path: '/quan-ly-tai-khoan',
+      name: 'Quản lý tài khoản',
+      icon: 'pi pi-users'
     },
     {
-      key: '1',
-      label: 'Events',
-      data: 'Events Folder',
-      icon: 'pi pi-fw pi-calendar',
-      children: [
-        { key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
-        { key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
-        { key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
-      ]
+      key: 'thong-ke-giai-dac-biet',
+      path: '/thong-ke-giai-dac-biet',
+      name: 'Thống kê giải đặc biệt',
+      icon: 'pi pi-star'
     },
     {
-      key: '2',
-      label: 'Movies',
-      data: 'Movies Folder',
-      icon: 'pi pi-fw pi-star-fill',
-      children: [
-        {
-          key: '2-0',
-          icon: 'pi pi-fw pi-star-fill',
-          label: 'Al Pacino',
-          data: 'Pacino Movies',
-          children: [
-            { key: '2-0-0', label: 'Scarface', icon: 'pi pi-fw pi-video', data: 'Scarface Movie' },
-            { key: '2-0-1', label: 'Serpico', icon: 'pi pi-fw pi-video', data: 'Serpico Movie' }
-          ]
-        },
-        {
-          key: '2-1',
-          label: 'Robert De Niro',
-          icon: 'pi pi-fw pi-star-fill',
-          data: 'De Niro Movies',
-          children: [
-            { key: '2-1-0', label: 'Goodfellas', icon: 'pi pi-fw pi-video', data: 'Goodfellas Movie' },
-            { key: '2-1-1', label: 'Untouchables', icon: 'pi pi-fw pi-video', data: 'Untouchables Movie', selectable: false }
-          ]
-        }
-      ]
+      key: 'thong-ke-dan-co-dinh',
+      path: '/thong-ke-dan-co-dinh',
+      name: 'Thống kê dàn cố định',
+      icon: 'pi pi-database'
+    },
+    {
+      key: 'thong-ke-dan-theo-ngay',
+      path: '/thong-ke-dan-theo-ngay',
+      name: 'Thống kê dàn theo ngày',
+      icon: 'pi pi-table'
+    },
+    {
+      key: 'tra-cuu-dan-dac-biet',
+      path: '/tra-cuu-dan-dac-biet',
+      name: 'Tra cứu dàn đặc biệt',
+      icon: 'pi pi-search'
     }
   ];
-  diemGanList = Array.from({ length: 11 }, (_, i) => {
-    const value = (i + 1) * 5;
-    return { label: value, value: value, key: value };
-  });
-  startDate = new Date();
-  endDate = new Date();
+  menuActive = 'thong-ke-giai-dac-biet';
+  constructor(private router: Router) {
+    const clearUrl = this.router.url.split('/')[1];
+    if (clearUrl === '') {
+      this.menuActive = 'thong-ke-giai-dac-biet';
+    } else {
+      this.menuActive = clearUrl;
+    }
+  }
+  toMenu(menu: any) {
+    this.router.navigate([menu.path])
+    this.menuActive = menu.key
+  }
 }

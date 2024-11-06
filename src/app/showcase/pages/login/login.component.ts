@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
           this.isLoading = false
           localStorage.setItem('token', res.body.result.token);
           this.toast.success('Đăng nhập thành công')
-          this.router.navigate(['/'])
+          this.router.navigate(['/thong-ke-giai-dac-biet']);
         } else {
           this.isLoading = false;
           this.toast.error(res.body.message);

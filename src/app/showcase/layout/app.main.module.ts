@@ -26,6 +26,12 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { AccountComponent } from "@pages/account/account.component";
+import { ThongKeDanCoDinhComponent } from "@pages/thong-ke-dan-co-dinh/thong-ke-dan-co-dinh.component";
+import { PaginatorModule } from 'primeng/paginator';
+import { ThongKeDanTheoNgayComponent } from "@pages/thong-ke-dan-theo-ngay/thong-ke-dan-theo-ngay.component";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -51,8 +57,10 @@ import { ToastModule } from 'primeng/toast';
     SkeletonModule,
     ProgressSpinnerModule,
     RippleModule,
+    TableModule,
+    PaginatorModule
   ],
-  declarations: [HomeComponent, StatisticComponent],
+  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainModule {}

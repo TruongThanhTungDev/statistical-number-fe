@@ -1,0 +1,12 @@
+.menu-hover:hover {
+  transition: 0.15s;
+  color: #FEC887;
+}
+.menu-hover {
+  transition: 0.15s;
+}
+.menu-active {
+  color: #FEC887;
+  border-left: 2px solid #FEC887;
+  transition: 0.15s;
+}

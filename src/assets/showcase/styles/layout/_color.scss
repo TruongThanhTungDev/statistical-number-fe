@@ -2,7 +2,7 @@ $primary: #676CAE;
 $warning: #FEC887;
 $danger: #FE8787;
 $danger-2: #EB1D23;
-
+$secondary: #61677C;
 .text-primary {
   color: $primary!important;
 }
@@ -15,6 +15,9 @@ $danger-2: #EB1D23;
 .text-warning {
   color: $warning!important;
 }
+.text-secondary {
+  color: $secondary!important;
+}
 .bg-primary {
   background-color: $primary!important;
 }
@@ -26,4 +29,7 @@ $danger-2: #EB1D23;
 }
 .bg-warning {
   background-color: $warning!important;
+}
+.bg-secondary {
+  background-color: $secondary!important;
 }

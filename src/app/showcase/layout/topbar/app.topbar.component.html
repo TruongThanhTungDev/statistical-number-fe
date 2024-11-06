@@ -1,12 +1,7 @@
-<div class="bg-white px-4 py-2 border-round-2xl grid align-items-center shadow-2" style="margin-left: 0!important; margin-right: 0!important;">
+<div class="bg-white px-4 py-2 border-round-2xl grid align-items-center shadow-2" style="margin: 0!important">
   <div class="col-6 grid m-0 align-items-center">
-    <div class="col m-0">
-      LOGO
-    </div>
-    <div class="col m-0 flex gap-6">
-      <div *ngFor="let tab of listTabs" class="cursor-pointer py-2" [class]="tab.key === tabActive ? 'font-bold text-black-alpha-90 border border-bottom-2 transition-all' : 'text-200'" (click)="changeTab(tab)">
-        {{tab.name}}
-      </div>
+    <div class="col m-0 fz-5 font-bold">
+      {{headerTitle ? headerTitle : ''}}
     </div>
     <div class="col m-0">
     </div>
