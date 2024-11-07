@@ -10,25 +10,11 @@
             <div>
               <div class="flex flex-column gap-2">
                 <label for="fixNumber">Số</label>
-                <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity" />
+                <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listQuantity" [(ngModel)]="quantity" placeholder="Chọn"/>
               </div>
             </div>
             <div>
-              <div class="flex flex-column gap-2">
-                <label for="fixNumber">Từ ngày</label>
-                <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
-                  (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
-              </div>
-            </div>
-            <div>
-              <div class="flex flex-column gap-2">
-                <label for="fixNumber">Đến ngày</label>
-                <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
-                  [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
-              </div>
-            </div>
-            <div>
-              <button pRipple
+              <button pRipple (click)="filterData()"
                 class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
                 kiếm</button>
             </div>
@@ -37,30 +23,36 @@
       </div>
       <div class="w-full container-content flex flex-column">
         <div class="flex flex-column flex-1 max-h-screen">
-          <p-table [value]="listData" dataKey="code" [tableStyle]="{'min-width': '50rem', 'width': '100%'}" sortMode="multiple" [scrollable]="true"
-            [scrollHeight]="scrollHeight" (rowsChange)="changeRowTable($event)">
+          <p-table [rowHover]="true" [value]="listData" dataKey="id" [tableStyle]="{'min-width': '900px', 'width': '100%'}" sortMode="multiple" [scrollable]="true"
+            [scrollHeight]="scrollHeight">
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="code">SL số của dàn <p-sortIcon field="code" /></th>
-                <th pSortableColumn="name">{{'Các số \n trong dàn'}} <p-sortIcon field="name" /></th>
-                <th pSortableColumn="category">Ngưỡng cực đại <p-sortIcon field="category" /></th>
-                <th pSortableColumn="quantity">Ngày ra gần nhất <p-sortIcon field="quantity" /></th>
+                <th>STT</th>
+                <th pSortableColumn="quantity">SL số của dàn <p-sortIcon field="quantity" /></th>
+                <th pSortableColumn="data" style="width: 30%;">{{'Các số \n trong dàn'}} <p-sortIcon field="data" /></th>
+                <th pSortableColumn="maxGap">Ngưỡng cực đại <p-sortIcon field="maxGap" /></th>
+                <th pSortableColumn="lastDate">Ngày ra gần nhất <p-sortIcon field="lastDate" /></th>
+                <th>Trong khoảng </th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
-              <tr>
-                <td>{{data.code}}</td>
-                <td>{{data.name}}</td>
-                <td>{{data.category}}</td>
+              <tr class="cursor-pointer" (dblclick)="selectRow(data)">
+                <td>{{data.index}}</td>
+                <td>{{data.quantity}}</td>
+                <td>{{data.data}}</td>
+                <td>{{data.maxGap}}</td>
                 <td>
-                  {{data.description}}
+                  {{data.lastDate}}
+                </td>
+                <td>
+                  {{data.startDate}} - {{data.endDate}}
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </div>
-        <p-paginator [first]="0" [rows]="20" [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]" />
+        <p-paginator [first]="first" [rows]="size" [totalRecords]="totalItems"
+          [rowsPerPageOptions]="[5, 10, 15, 20, 30]" (onPageChange)="changePage($event)"/>
       </div>
     </div>
   </div>

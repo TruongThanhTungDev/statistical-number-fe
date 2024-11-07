@@ -1,15 +1,16 @@
 import { HttpResponse } from "@angular/common/http";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ApiServices } from "@layout/api.services";
 import { Plugins } from "../../utils/plugins";
 import moment from "moment";
 import { ToastService } from "../../utils/toast.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'home-component',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number';
   REQUEST_STATISTIC = 'api/v1/statistic';
   soCoDinhList: any[] = [
@@ -90,20 +91,31 @@ export class HomeComponent {
   listQuantity: any;
   data: any;
   plugins = new Plugins();
-  isLoading = false
+  isLoading = false;
   constructor(
     private apiService: ApiServices,
-    private toast: ToastService
+    private toast: ToastService,
+    private route: ActivatedRoute
   ) { }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        this.listQuantity = params.data
+        this.startDate = new Date(moment(+params.startDate, 'YYYYMMDD').toDate())
+        this.endDate = new Date(moment(+params.endDate, 'YYYYMMDD').toDate())
+        this.searchStatistic()
+      }
+    })
+  }
   searchStatisticsTodayNumber() {
-    this.isLoading = true
+    this.isLoading = true;
     const payload = {
       quantity: this.quantity ? this.quantity.value : ''
     };
     this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code == 200) {
-          this.isLoading = false
+          this.isLoading = false;
           this.data = {
             ...res.body.result,
             data: res.body.result.data.join(', '),
@@ -115,8 +127,8 @@ export class HomeComponent {
           };
           this.toast.success('Tìm kiếm dữ liệu thành công!');
         } else {
-          this.isLoading = false
-          this.toast.error(res.body.result)
+          this.isLoading = false;
+          this.toast.error(res.body.result);
         }
       },
       () => {
@@ -137,16 +149,17 @@ export class HomeComponent {
             .map((item: any) => +item)
         : ''
     };
-    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe((res: HttpResponse<any>) => {
-      if (res.body.code === 200) {
-        this.isLoading = false;
-        this.data = this.formatData(res.body.result);
-        this.toast.success('Tìm kiếm dữ liệu thành công!')
-      } else {
-        this.isLoading = false;
-        this.toast.error(res.body.result);
-      }
-    },
+    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe(
+      (res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.isLoading = false;
+          this.data = this.formatData(res.body.result);
+          this.toast.success('Tìm kiếm dữ liệu thành công!');
+        } else {
+          this.isLoading = false;
+          this.toast.error(res.body.result);
+        }
+      },
       () => {
         this.isLoading = false;
       }

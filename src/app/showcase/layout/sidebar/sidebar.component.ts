@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs";
 
 @Component({
   selector: 'sidebar-component',
@@ -40,13 +41,16 @@ export class SidebarComponent {
     }
   ];
   menuActive = 'thong-ke-giai-dac-biet';
-  constructor(private router: Router) {
-    const clearUrl = this.router.url.split('/')[1];
-    if (clearUrl === '') {
-      this.menuActive = 'thong-ke-giai-dac-biet';
-    } else {
-      this.menuActive = clearUrl;
-    }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      const clearUrl = event.url.split('/')[1].split("?")[0]
+      if (clearUrl) {
+        this.menuActive = clearUrl
+      }
+    });
   }
   toMenu(menu: any) {
     this.router.navigate([menu.path])
