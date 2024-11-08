@@ -12,7 +12,9 @@ export class UserRouteAccessService implements CanActivate {
     // that the client has a principal too, if they already logged in by the server.
     // This could happen on a page refresh.
     const isAuthen = this.checkLogin();
-    if (isAuthen === false) this.router.navigate(["/login"]);
+    if (isAuthen === false) {
+      this.router.navigate(['/login']);
+    }
     return isAuthen;
   }
 

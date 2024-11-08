@@ -47,6 +47,7 @@
                 <th pSortableColumn="maxGap">Ngưỡng cực đại <p-sortIcon field="maxGap" /></th>
                 <th pSortableColumn="lastDate">Ngày ra gần nhất <p-sortIcon field="lastDate" /></th>
                 <th>Trong khoảng </th>
+                <th>Người tạo</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
@@ -60,6 +61,9 @@
                 </td>
                 <td>
                   {{data.startDate}} - {{data.endDate}}
+                </td>
+                <td>
+                  {{data.createdBy}}
                 </td>
               </tr>
             </ng-template>

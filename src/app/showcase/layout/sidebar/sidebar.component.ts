@@ -49,6 +49,8 @@ export class SidebarComponent {
       const clearUrl = event.url.split('/')[1].split("?")[0]
       if (clearUrl) {
         this.menuActive = clearUrl
+      } else {
+        this.router.navigate(['/thong-ke-giai-dac-biet']);
       }
     });
   }

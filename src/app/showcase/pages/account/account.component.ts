@@ -69,6 +69,7 @@ export class AccountComponent implements OnInit {
         setTimeout(() => {
           this.toast.success('Xóa thành công');
           this.getData()
+          this.selectedItems = []
         }, 1000)
       },
       reject: () => {
@@ -87,5 +88,53 @@ export class AccountComponent implements OnInit {
       )
     })
     this.getData()
+  }
+  lockAccount() {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Bạn chắc chắn muốn khóa tài khoản này?',
+      header: 'Xác nhận Khóa',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Xác nhận',
+      rejectLabel: 'Hủy',
+      accept: async () => {
+        this.apiService.get(this.REQUEST_URL + '/lock?id=' + this.selectedItems[0].id).subscribe(
+          (res: HttpResponse<any>) => {
+            if (res.body.code === 200) {
+              this.toast.success('Đã khóa tài khoản')
+              this.getData()
+              this.selectedItems = []
+            }
+          }
+        )
+      },
+      reject: () => {}
+    });
+  }
+  unlockAccount() {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Bạn chắc chắn muốn khóa tài khoản này?',
+      header: 'Xác nhận Khóa',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Xác nhận',
+      rejectLabel: 'Hủy',
+      accept: async () => {
+        this.apiService.get(this.REQUEST_URL + '/unlock?id=' + this.selectedItems[0].id).subscribe((res: HttpResponse<any>) => {
+          if (res.body.code === 200) {
+            this.toast.success('Đã khóa tài khoản');
+            this.getData();
+            this.selectedItems = [];
+          }
+        });
+      },
+      reject: () => {}
+    });
   }
 }

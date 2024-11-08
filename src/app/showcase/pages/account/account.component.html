@@ -3,7 +3,9 @@
     <div class="mb-4 flex gap-2">
       <them-sua-tai-khoan (reLoadData)="reloadData()"/>
       <cap-nhat-mat-khau (reLoadData)="reloadData()"  [listUser]="selectedItems"/>
-      <p-button label="Khóa" icon="pi pi-lock" severity="danger"/>
+      <p-button label="Khóa" icon="pi pi-lock" severity="danger" [disabled]="!selectedItems.length || selectedItems.length > 1" (onClick)="lockAccount()"/>
+      <p-button label="Mở khóa" icon="pi pi-unlock" severity="warning"
+        [disabled]="!selectedItems.length || selectedItems.length > 1" (onClick)="unlockAccount()"/>
       <p-button [disabled]="!selectedItems.length" label="Xóa tài khoản" icon="pi pi-trash" severity="danger" (onClick)="deleteAccount()"/>
     </div>
     <p-table [value]="listData" dataKey="id" [tableStyle]="{'min-width': '50rem'}" [paginator]="true" sortMode="multiple" [(selection)]="selectedItems"
@@ -28,7 +30,7 @@
             <div *ngIf="data.status === 1" class="bg-warning rounded-4 text-center w-[100px] py-2 text-white">
               Hoạt động
             </div>
-            <div *ngIf="data.status === 0" class="bg-danger rounded-4 text-center w-[100px] py-2 text-white">
+            <div *ngIf="data.status === -1" class="bg-danger rounded-4 text-center w-[100px] py-2 text-white">
               Khóa
             </div>
           </td>

@@ -1,4 +1,4 @@
-<p-button label="Cập nhật mật khẩu" icon="pi pi-key" severity="secondary" (onClick)="showDialog()" [disabled]="listUser && listUser.length > 1"/>
+<p-button label="Cập nhật mật khẩu" icon="pi pi-key" severity="secondary" (onClick)="showDialog()" [disabled]="!listUser.length || listUser.length > 1"/>
 <p-dialog header="Cập nhật mật khẩu" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
   <div class="flex flex-column gap-4">
     <div>
