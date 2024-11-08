@@ -1,0 +1,29 @@
+<p-button label="Cập nhật mật khẩu" icon="pi pi-key" severity="secondary" (onClick)="showDialog()" [disabled]="listUser && listUser.length > 1"/>
+<p-dialog header="Cập nhật mật khẩu" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <div class="flex flex-column gap-4">
+    <div>
+      <div>Mật khẩu cũ<span class="text-red-500">*</span></div>
+      <input pInputText type="password" class="w-full" [ngClass]="{'ng-invalid ng-dirty': !password}" autocomplete="off"
+        [(ngModel)]="oldPassword" />
+    </div>
+    <div>
+      <div>Mật khẩu mới<span class="text-red-500">*</span></div>
+      <input pInputText type="password" class="w-full" [ngClass]="{'ng-invalid ng-dirty': !password}" autocomplete="off"
+        [(ngModel)]="password" />
+    </div>
+    <div>
+      <div>Nhập lại mật khẩu <span class="text-red-500">*</span></div>
+      <input pInputText type="password" class="w-full"
+        [ngClass]="{'ng-invalid ng-dirty': !repassword || (repassword && password && repassword !== password)}"
+        autocomplete="off" [(ngModel)]="repassword" />
+      <span class="text-red-500 fz-3" *ngIf="checkPassword">Mật khẩu không khớp</span>
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Hủy" (onClick)="closeModal()" severity="secondary" />
+      <p-button *ngIf="!isLoading" label="Lưu thông tin" severity="warning" (onClick)="save()" />
+      <p-button *ngIf="isLoading" severity="warning" styleClass="w-full">
+        <p-progressSpinner styleClass="w-5rem h-1rem" strokeWidth="2" />
+      </p-button>
+    </div>
+  </div>
+</p-dialog>

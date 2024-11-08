@@ -29,8 +29,11 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { CalendarModule } from 'primeng/calendar';
 import { ScrollerModule } from 'primeng/scroller';
 import { HeadersInterceptor } from "./headers-intercepter";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";
+import { DialogModule } from 'primeng/dialog';
+import { ThemSuaTaiKhoanComponent } from "../shared/popup/them-sua-tai-khoan/them-sua-tai-khoan.component";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
   imports: [
@@ -60,7 +63,8 @@ import { ToastModule } from "primeng/toast";
     TreeSelectModule,
     CalendarModule,
     ScrollerModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   providers: [
     {
@@ -71,7 +75,8 @@ import { ToastModule } from "primeng/toast";
       }
     },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

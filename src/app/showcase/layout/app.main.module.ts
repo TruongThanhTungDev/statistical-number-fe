@@ -31,6 +31,10 @@ import { AccountComponent } from "@pages/account/account.component";
 import { ThongKeDanCoDinhComponent } from "@pages/thong-ke-dan-co-dinh/thong-ke-dan-co-dinh.component";
 import { PaginatorModule } from 'primeng/paginator';
 import { ThongKeDanTheoNgayComponent } from "@pages/thong-ke-dan-theo-ngay/thong-ke-dan-theo-ngay.component";
+import { ThemSuaTaiKhoanComponent } from "../shared/popup/them-sua-tai-khoan/them-sua-tai-khoan.component";
+import { DialogModule } from "primeng/dialog";
+import { CapNhatMatKhauComponent } from "../shared/popup/cap-nhat-mat-khau/cap-nhat-mat-khau.component";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
   imports: [
@@ -58,9 +62,10 @@ import { ThongKeDanTheoNgayComponent } from "@pages/thong-ke-dan-theo-ngay/thong
     ProgressSpinnerModule,
     RippleModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    DialogModule,
   ],
-  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppMainModule {}

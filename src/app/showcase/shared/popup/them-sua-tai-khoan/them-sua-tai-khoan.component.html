@@ -1,0 +1,41 @@
+<p-button label="Thêm tài khoản" icon="pi pi-plus-circle" severity="warning" (onClick)="showDialog()"/>
+<p-dialog header="Thêm tài khoản" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <div class="flex flex-column gap-4">
+    <div>
+      <div>Họ tên <span class="text-red-500">*</span></div>
+      <input pInputText class="w-full" [ngClass]="{'ng-invalid ng-dirty': !fullName}" [(ngModel)]="fullName" autocomplete="off" />
+    </div>
+    <div>
+      <div>Tên tài khoản <span class="text-red-500">*</span></div>
+      <input pInputText type="text" class="w-full" autocomplete="off" [ngClass]="{'ng-invalid ng-dirty': !username}" [(ngModel)]="username" />
+    </div>
+    <div>
+      <div>Mật khẩu <span class="text-red-500">*</span></div>
+      <input pInputText type="password" class="w-full" [ngClass]="{'ng-invalid ng-dirty': !password}" autocomplete="off" [(ngModel)]="password"/>
+    </div>
+    <div>
+      <div>Nhập lại mật khẩu <span class="text-red-500">*</span></div>
+      <input pInputText type="password" class="w-full" [ngClass]="{'ng-invalid ng-dirty': !repassword || (repassword && password && repassword !== password)}" autocomplete="off" [(ngModel)]="repassword"/>
+      <span class="text-red-500 fz-3" *ngIf="checkPassword">Mật khẩu không khớp</span>
+    </div>
+    <div>
+      <div>Số điện thoại</div>
+      <input pInputText type="number" class="w-full" autocomplete="off" [(ngModel)]="phone" />
+    </div>
+    <div>
+      <div>Email</div>
+      <input pInputText type="text" class="w-full" autocomplete="off" [(ngModel)]="email"/>
+    </div>
+    <div>
+      <div>Địa chỉ</div>
+      <input pInputText type="text" class="w-full" autocomplete="off" [(ngModel)]="address"/>
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Hủy" (onClick)="closeModal()" severity="secondary"/>
+      <p-button *ngIf="!isLoading" label="Lưu thông tin" severity="warning" (onClick)="save()" />
+      <p-button *ngIf="isLoading" severity="warning" styleClass="w-full">
+        <p-progressSpinner styleClass="w-5rem h-1rem" strokeWidth="2" />
+      </p-button>
+    </div>
+  </div>
+</p-dialog>
