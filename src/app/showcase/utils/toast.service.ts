@@ -13,7 +13,7 @@ export class ToastService {
     });
   }
   info(message: string) {
-    this.messageService.add({ severity: 'info', summary: 'Thông báo', detail: message });
+    this.messageService.add({ severity: 'info', summary: 'Thông báo', detail: message, });
   }
   warning(message: string) {
     this.messageService.add({ severity: 'warn', summary: 'Cảnh báo', detail: message });

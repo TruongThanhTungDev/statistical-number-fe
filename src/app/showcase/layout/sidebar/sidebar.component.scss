@@ -10,3 +10,17 @@
   border-left: 2px solid #FEC887;
   transition: 0.15s;
 }
+.siderbar-lg {
+  display: block;
+}
+.sidebar-md {
+  display: none;
+}
+@media screen and (max-width: 900px) {
+  .siderbar-lg {
+    display: none;
+  }
+  .sidebar-md {
+    display: block;
+  }
+}

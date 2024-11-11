@@ -34,6 +34,8 @@ import { ToastModule } from "primeng/toast";
 import { DialogModule } from 'primeng/dialog';
 import { ThemSuaTaiKhoanComponent } from "../shared/popup/them-sua-tai-khoan/them-sua-tai-khoan.component";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SidebarModule } from 'primeng/sidebar';
+
 @NgModule({
   declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
   imports: [
@@ -64,7 +66,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     CalendarModule,
     ScrollerModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    SidebarModule
   ],
   providers: [
     {

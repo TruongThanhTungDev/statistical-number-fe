@@ -1,0 +1,26 @@
+.container-main-lg {
+  display: flex;
+}
+.container-main-md {
+  display: none;
+}
+.main-lg {
+  display: block;
+}
+.main-md {
+  display: none;
+}
+@media screen and (max-width: 900px) {
+  .main-lg {
+    display: none;
+  }
+  .main-md {
+    display: block;
+  }
+  .container-main-lg {
+    display: none;
+  }
+  .container-main-md {
+    display: flex;
+  }
+}

@@ -9,11 +9,11 @@ import { ActivatedRoute, Router } from "@angular/router";
   templateUrl: './thong-ke-dan-co-dinh.component.html'
 })
 export class ThongKeDanCoDinhComponent implements OnInit {
-  startDate: any;
-  endDate: any;
+  startDate = new Date('2010-01-01');
+  endDate = new Date(Date.now() - 86400000);
   minDate: any;
   maxDate: any;
-  quantity: any;
+  quantity = { label: 'Tất cả', value: '', key: 'all' };
   itemsPerPage = 5;
   scrollHeight = '';
   REQUEST_URL = 'api/v1/date-values-history/search';
@@ -25,8 +25,11 @@ export class ThongKeDanCoDinhComponent implements OnInit {
   first = 0;
   size = 15;
   totalItems = 0;
-  listQuantity = Array.from({ length: 9 }, (_, i) => {
-    const value = 30 + i * 5;
+  listQuantity = Array.from({ length: 10 }, (_, i) => {
+    if (i === 0) {
+      return { label: 'Tất cả', value: '', key: 'all' };
+    }
+    const value = 30 + (i - 1) * 5;
     return { label: value, value: value, key: value };
   });
   sort = ['id', 'desc'];
@@ -34,8 +37,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
     private apiService: ApiServices,
     private router: Router,
     private route: ActivatedRoute
-  )
-  { }
+  ) {}
   ngOnInit(): void {
     this.scrollHeight = this.plugins.calculateScrollHeight();
     this.searchThongKeDanCoDinh();
@@ -43,19 +45,24 @@ export class ThongKeDanCoDinhComponent implements OnInit {
   changeRowTable(event: any) {
     this.itemsPerPage = event;
   }
+  filter() {
+    const arr = [];
+    arr.push('status==1;id>0');
+    if (this.quantity && this.quantity.value) arr.push(`quantity==${this.quantity.value}`);
+    return arr.join(';');
+  }
   searchThongKeDanCoDinh() {
     const params = {
       page: this.page,
       size: this.size,
-      filter: 'status==1',
-      sort: this.sort,
-      quantity: this.quantity
+      filter: this.filter(),
+      sort: this.sort
     };
     this.apiService.getOption(this.REQUEST_URL, params, '').subscribe((res: HttpResponse<any>) => {
       if (res.body.code === 200) {
         this.listData = res.body.result.content.map((item, index) => ({
           ...item,
-          index: (10 * this.page) + index + 1,
+          index: 10 * this.page + index + 1,
           data: item.data.replaceAll(/\[|\]/g, ''),
           lastDate: this.plugins.formatDateWithType(item.lastDate, 'YYYYMMDD', 'DD/MM/YYYY'),
           startDate: this.plugins.formatDateWithType(item.startDate, 'YYYYMMDD', 'DD/MM/YYYY'),

@@ -6,7 +6,8 @@ import { ToastService } from "../../utils/toast.service";
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['login.component.scss']
 })
 export class LoginComponent implements OnInit{
   username: any

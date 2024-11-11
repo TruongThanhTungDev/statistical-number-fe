@@ -1,0 +1,20 @@
+.login-container {
+  width: 539px;
+  .login-title {
+    font-size: 32px;
+  }
+  .login-subtitle {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .login-container {
+    width: 80%;
+    .login-title {
+      font-size: 18px;
+    }
+    .login-subtitle {
+      font-size: 12px;
+    }
+  }
+}

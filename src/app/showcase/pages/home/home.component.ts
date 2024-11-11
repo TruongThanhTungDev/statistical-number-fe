@@ -83,8 +83,8 @@ export class HomeComponent implements OnInit {
     const value = 10 + i * 5;
     return { label: value, value: value, key: value };
   });
-  startDate: any;
-  endDate: any;
+  startDate = new Date('2010-01-01');
+  endDate = new Date(Date.now() - 86400000);
   minDate: any;
   maxDate: any;
   quantity: any;
@@ -96,16 +96,16 @@ export class HomeComponent implements OnInit {
     private apiService: ApiServices,
     private toast: ToastService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (Object.keys(params).length) {
-        this.listQuantity = params.data
-        this.startDate = new Date(moment(+params.startDate, 'YYYYMMDD').toDate())
-        this.endDate = new Date(moment(+params.endDate, 'YYYYMMDD').toDate())
-        this.searchStatistic()
+        this.listQuantity = params.data;
+        this.startDate = new Date(moment(+params.startDate, 'YYYYMMDD').toDate());
+        this.endDate = new Date(moment(+params.endDate, 'YYYYMMDD').toDate());
+        this.searchStatistic();
       }
-    })
+    });
   }
   searchStatisticsTodayNumber() {
     this.isLoading = true;

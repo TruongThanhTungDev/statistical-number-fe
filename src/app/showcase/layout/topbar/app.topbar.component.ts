@@ -4,7 +4,8 @@ import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
-  templateUrl: './app.topbar.component.html'
+  templateUrl: './app.topbar.component.html',
+  styleUrls: ['app.topbar.component.scss']
 })
 export class AppTopBarComponent {
   tabActive = 'home';

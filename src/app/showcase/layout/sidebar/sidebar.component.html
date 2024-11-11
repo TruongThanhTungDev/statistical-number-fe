@@ -1,6 +1,6 @@
-<div>
+<div class="shadow-2 bg-white p-4 border-round-2xl w-[325px] h-full flex-col siderbar-lg">
   <!-- for pc -->
-  <div>
+  <div class="">
     <div class="font-bold fz-10 mb-6">
       TinPhat
     </div>
@@ -13,4 +13,23 @@
       </div>
     </div>
   </div>
+</div>
+<div class="sidebar-md">
+  <p-sidebar [(visible)]="sidebarVisible">
+    <div class="">
+      <div class="font-bold fz-10 mb-6">
+        TinPhat
+      </div>
+      <div class="flex flex-column gap-4 fz-4">
+        <div *ngFor="let menu of listMenu" class="flex gap-4 align-items-center p-2 cursor-pointer menu-hover"
+          (click)="toMenuV2(menu)" [class]="menuActive === menu.key ? 'menu-active' : ''">
+          <i [class]="menu.icon" style="font-size: 1.5rem"></i>
+          <div>
+            {{ menu.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-sidebar>
+  <p-button (onClick)="sidebarVisible = true" [outlined]="true" severity="contrast" icon="pi pi-align-justify" />
 </div>

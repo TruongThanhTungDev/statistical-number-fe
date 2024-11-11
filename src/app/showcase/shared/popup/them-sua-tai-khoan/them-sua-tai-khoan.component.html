@@ -1,5 +1,8 @@
-<p-button label="Thêm tài khoản" icon="pi pi-plus-circle" severity="warning" (onClick)="showDialog()"/>
-<p-dialog header="Thêm tài khoản" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+<p-button label="Thêm tài khoản" icon="pi pi-plus-circle" severity="warning" (onClick)="showDialog()" class="screen-lg"/>
+<div class="screen-md">
+  <i class="pi pi-plus-circle" (click)="showDialog()" ></i>
+</div>
+<p-dialog header="Thêm tài khoản" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="closeModal()">
   <div class="flex flex-column gap-4">
     <div>
       <div>Họ tên <span class="text-red-500">*</span></div>

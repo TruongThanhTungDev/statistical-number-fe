@@ -1,10 +1,22 @@
-<div class="layout-wrapper p-4 h-full overflow-hidden flex gap-4">
-  <sidebar-component class="shadow-2 bg-white p-4 border-round-2xl w-[325px] flex flex-col"></sidebar-component>
+<div class="layout-wrapper p-4 h-full overflow-hidden container-main-lg gap-4">
+  <sidebar-component class="h-full"></sidebar-component>
   <div class="w-full">
     <div class="mb-4">
       <app-topbar></app-topbar>
     </div>
-    <div>
+    <div class="main-lg">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<div class="container-main-md flex-column h-full">
+  <div class="bg-white w-full flex align-items-center justify-content-between py-2 px-4">
+    <sidebar-component class="h-full"></sidebar-component>
+    <app-topbar></app-topbar>
+    <div></div>
+  </div>
+  <div class="main-md bg-white h-full">
+    <div class="px-5">
       <router-outlet></router-outlet>
     </div>
   </div>

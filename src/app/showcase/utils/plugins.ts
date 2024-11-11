@@ -1,7 +1,7 @@
 import moment from 'moment';
 export class Plugins {
   formatDate(date: any) {
-    return date ? moment(date).format('DD/MM/YYYY - HH:mm:ss') : '';
+    return date ? moment(date).format('DD/MM/YYYY') : '';
   }
   formatDateWithType(date: any, type: any, result: any) {
     return date ? moment(date, type).format(result) : '';

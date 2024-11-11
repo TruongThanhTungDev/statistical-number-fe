@@ -28,7 +28,7 @@
         </div> -->
         <div>
           <div class="flex flex-column gap-2">
-            <label for="fixNumber">Số</label>
+            <label for="fixNumber">Thống kê dàn số theo ngày</label>
             <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listSo" placeholder="Chọn số" [(ngModel)]="quantity"/>
           </div>
         </div>
@@ -36,18 +36,15 @@
           <button (click)="searchStatisticsTodayNumber()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Kết
             quả</button>
-          <em>
-            66; 62; 33; 33; 66; 27; 89; 46; 89; 56; 77; 88; 12; 34; 56; 78; 35; 22; 11; 04; 60
-          </em>
         </div>
       </div>
       <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
-        <div>
+        <!-- <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Tỉnh</label>
             <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="[]" placeholder="Chọn tỉnh" />
           </div>
-        </div>
+        </div> -->
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Từ ngày</label>

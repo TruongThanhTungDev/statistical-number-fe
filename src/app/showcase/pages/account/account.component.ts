@@ -4,6 +4,7 @@ import { ApiServices } from '@layout/api.services';
 import { ToastService } from '../../utils/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { OPERATIONS } from '@layout/app.constants';
+import { Plugins } from '../../utils/plugins';
 
 @Component({
   selector: 'account-component',
@@ -14,6 +15,8 @@ export class AccountComponent implements OnInit {
   itemsPerPage = 10;
   scrollHeight: string = '';
   REQUEST_URL = 'api/v1/user';
+  isShowUpdatePassword = false;
+  plugins = new Plugins();
   selectedItems: any[] = [];
   constructor(
     private apiService: ApiServices,
@@ -52,6 +55,7 @@ export class AccountComponent implements OnInit {
   }
   reloadData() {
     this.getData();
+    this.isShowUpdatePassword = false
   }
   deleteAccount() {
     this.confirmationService.confirm({
@@ -65,29 +69,24 @@ export class AccountComponent implements OnInit {
       acceptLabel: 'Xác nhận',
       rejectLabel: 'Hủy',
       accept: async () => {
-        await this.handleDeleteAccount()
+        await this.handleDeleteAccount();
         setTimeout(() => {
           this.toast.success('Xóa thành công');
-          this.getData()
-          this.selectedItems = []
-        }, 1000)
+          this.getData();
+          this.selectedItems = [];
+        }, 1000);
       },
-      reject: () => {
-        
-      }
+      reject: () => {}
     });
   }
   async handleDeleteAccount() {
-    this.selectedItems.forEach(async item => {
-      await this.apiService.delete(this.REQUEST_URL + OPERATIONS.DELETE, item.id).subscribe(
-        (res: HttpResponse<any>) => {
-          if (res.body.code == 200) {
-            
-          }
-        } 
-      )
-    })
-    this.getData()
+    this.selectedItems.forEach(async (item) => {
+      await this.apiService.delete(this.REQUEST_URL + OPERATIONS.DELETE, item.id).subscribe((res: HttpResponse<any>) => {
+        if (res.body.code == 200) {
+        }
+      });
+    });
+    this.getData();
   }
   lockAccount() {
     this.confirmationService.confirm({
@@ -101,15 +100,13 @@ export class AccountComponent implements OnInit {
       acceptLabel: 'Xác nhận',
       rejectLabel: 'Hủy',
       accept: async () => {
-        this.apiService.get(this.REQUEST_URL + '/lock?id=' + this.selectedItems[0].id).subscribe(
-          (res: HttpResponse<any>) => {
-            if (res.body.code === 200) {
-              this.toast.success('Đã khóa tài khoản')
-              this.getData()
-              this.selectedItems = []
-            }
+        this.apiService.get(this.REQUEST_URL + '/lock?id=' + this.selectedItems[0].id).subscribe((res: HttpResponse<any>) => {
+          if (res.body.code === 200) {
+            this.toast.success('Đã khóa tài khoản');
+            this.getData();
+            this.selectedItems = [];
           }
-        )
+        });
       },
       reject: () => {}
     });
@@ -136,5 +133,11 @@ export class AccountComponent implements OnInit {
       },
       reject: () => {}
     });
+  }
+  selecteItem(item: any) {
+    this.selectedItems = [item];
+  }
+  showDialogUpdatePassword() {
+    this.isShowUpdatePassword = !this.isShowUpdatePassword
   }
 }

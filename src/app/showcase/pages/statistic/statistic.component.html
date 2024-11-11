@@ -1,26 +1,103 @@
-<div class="flex gap-4 container-body">
-  <div class="shadow-2 bg-white p-4 border-round-2xl w-[487px] flex flex-col">
-    <div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
-      <div class="fz-5 font-bold">
-        Tìm kiếm
+<div class="screen-lg">
+  <div class="flex gap-4 container-body">
+    <div class="shadow-2 bg-white p-4 border-round-2xl w-[487px] flex flex-col">
+      <div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
+        <div class="fz-5 font-bold">
+          Tìm kiếm
+        </div>
+        <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Số</label>
+              <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity" />
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Từ ngày</label>
+              <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Đến ngày</label>
+              <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <button pRipple (click)="searchStatistic()"
+              class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+              kiếm</button>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+    </div>
+    <div class="shadow-2 bg-white p-4 border-round-2xl w-full">
+      <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
+        Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
+      </div>
+      <div *ngIf="!isLoading" class="content-scroll">
+        <div *ngIf="listData && listData.length">
+          <div class="flex gap-4 align-items-center flex-wrap">
+            <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
+              <div class="bg-danger text-center p-3 text-white rounded-6"
+                [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
+                {{item.date}}
+              </div>
+              <div class="fz-18 p-4 text-danger text-center font-bold">
+                {{item.value}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="screen-md relative">
+  <div class="absolute" style="top: -28px; right: 1rem;">
+    <i class="pi pi-search" (click)="isShowSearch = !isShowSearch"></i>
+    <p-sidebar styleClass="h-30rem" [(visible)]="isShowSearch" position="bottom" [closeOnEscape]="true" [showCloseIcon]="false">
+      <ng-template pTemplate="header" styleClass="w-full">
+        <div class="flex justify-content-between mb-4">
+          <div class="text-secondary font-bold">Hủy</div>
+          <div class="font-bold">Tìm kiếm</div>
+          <div><i class="pi pi-search" (click)="isShowSearch = !isShowSearch"></i></div>
+        </div>
+      </ng-template>
+      <div class="flex flex-column gap-4">
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Số</label>
-            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity"/>
+            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity" />
           </div>
         </div>
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Từ ngày</label>
-            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày"/>
+            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+              (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
           </div>
         </div>
         <div>
           <div class="flex flex-column gap-2">
             <label for="fixNumber">Đến ngày</label>
-            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy" [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày"/>
+            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+              [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
           </div>
         </div>
         <div>
@@ -29,38 +106,6 @@
             kiếm</button>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="shadow-2 bg-white p-4 border-round-2xl w-full">
-    <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
-      Thống kê từ ngày dd/mm/yyyy đến ngày dd/mm/yyyy
-    </div>
-    <div *ngIf="!isLoading" class="content-scroll">
-      <div *ngIf="listData && listData.length">
-        <div class="flex gap-4 align-items-center flex-wrap">
-          <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
-            <div class="bg-danger text-center p-3 text-white rounded-6"
-              [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
-              {{item.date}}
-            </div>
-            <div class="fz-18 p-4 text-danger text-center font-bold">
-              {{item.value}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-      <p-skeleton size="10rem" />
-    </div>
+    </p-sidebar>
   </div>
 </div>

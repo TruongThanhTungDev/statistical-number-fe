@@ -8,6 +8,7 @@ import { filter } from "rxjs";
   styleUrls: ['sidebar.component.scss']
 })
 export class SidebarComponent {
+  sidebarVisible: boolean = false;
   listMenu: any[] = [
     {
       key: 'quan-ly-tai-khoan',
@@ -46,16 +47,21 @@ export class SidebarComponent {
     private route: ActivatedRoute
   ) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      const clearUrl = event.url.split('/')[1].split("?")[0]
+      const clearUrl = event.url.split('/')[1].split('?')[0];
       if (clearUrl) {
-        this.menuActive = clearUrl
+        this.menuActive = clearUrl;
       } else {
         this.router.navigate(['/thong-ke-giai-dac-biet']);
       }
     });
   }
   toMenu(menu: any) {
-    this.router.navigate([menu.path])
-    this.menuActive = menu.key
+    this.router.navigate([menu.path]);
+    this.menuActive = menu.key;
+  }
+  toMenuV2(menu: any) {
+    this.router.navigate([menu.path]);
+    this.menuActive = menu.key;
+    this.sidebarVisible = false
   }
 }
