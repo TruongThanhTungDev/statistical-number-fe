@@ -21,7 +21,7 @@
         </div>
         <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
           <div class="fz-5 font-bold">
-            Thống kê dàn số theo ngày
+            Thống kê dàn tự do
           </div>
           <div>
             <div class="flex flex-column gap-2">
@@ -49,8 +49,8 @@
               kiếm</button>
           </div>
           <div>
-            <button pRipple
-              class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-blue-500 hover:bg-blue-600 transition-all transition-duration-300 cursor-pointer mb-2">Lưu nhanh</button>
+            <button pRipple (click)="quickSave()" *ngIf="data"
+              class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Lưu nhanh</button>
           </div>
         </div>
       </div>

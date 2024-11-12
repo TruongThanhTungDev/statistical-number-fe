@@ -11,7 +11,7 @@ import moment from "moment";
 })
 export class ThongKeDanTheoNgayComponent implements OnInit {
   startDate = new Date('2010-01-01');
-  endDate = new Date(Date.now() - 86400000);
+  endDate = new Date(Date.now());
   minDate: any;
   maxDate: any;
   quantity: any;
@@ -51,7 +51,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
   }
   filter() {
     const arr = [];
-    arr.push('status==0');
+    arr.push('status=in=(0,2)');
     if (this.quantity) arr.push(`quantity==${this.quantity.value}`);
     if (this.startDate) arr.push(`date>=${+moment(this.startDate).format('YYYYMMDD')}`);
     if (this.endDate) arr.push(`date<=${+moment(this.endDate).format('YYYYMMDD')}`);
