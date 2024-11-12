@@ -48,7 +48,7 @@ export class SidebarComponent {
   ) {
     const url = this.router.url.split('/')[1].split('?')[0];
     if (url) {
-      this.menuActive = url
+      this.menuActive = url;
     } else {
       this.router.navigate(['/thong-ke-giai-dac-biet']);
     }
@@ -68,6 +68,9 @@ export class SidebarComponent {
   toMenuV2(menu: any) {
     this.router.navigate([menu.path]);
     this.menuActive = menu.key;
-    this.sidebarVisible = false
+    this.sidebarVisible = false;
+  }
+  logout() {
+    this.router.navigate(['/login']);
   }
 }

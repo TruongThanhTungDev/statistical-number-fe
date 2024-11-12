@@ -1,20 +1,28 @@
 .login-container {
   width: 539px;
+  padding: 4rem;
   .login-title {
     font-size: 32px;
   }
   .login-subtitle {
     font-size: 20px;
   }
+  .input-responsive {
+    height: 60px;
+  }
 }
 @media screen and (max-width: 900px) {
   .login-container {
     width: 80%;
+    padding: 1rem 2rem;
     .login-title {
       font-size: 18px;
     }
     .login-subtitle {
       font-size: 12px;
+    }
+    .input-responsive {
+      height: 36px;
     }
   }
 }

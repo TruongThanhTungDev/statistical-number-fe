@@ -1,5 +1,5 @@
 <div class="h-full relative">
-  <div class="bg-white py-4 px-8 rounded-8 absolute login-container top-50 left-50" style="transform: translate(-50%,-50%);">
+  <div class="bg-white rounded-8 absolute login-container top-50 left-50" style="transform: translate(-50%,-50%);">
     <div class="font-bold text-center mb-2 login-title">
       Đăng nhập tài khoản
     </div>
@@ -8,10 +8,10 @@
     </div>
     <div class="mb-4">
       <div class="mb-4">
-        <input type="text" pInputText class="w-full h-[60px]" placeholder="Tài khoản" [(ngModel)]="username"/>
+        <input type="text" pInputText class="w-full input-responsive" placeholder="Tài khoản" [(ngModel)]="username"/>
       </div>
       <div>
-        <input type="password" pInputText class="w-full h-[60px]" placeholder="Mật khẩu" [(ngModel)]="password"/>
+        <input type="password" pInputText class="w-full input-responsive" placeholder="Mật khẩu" [(ngModel)]="password"/>
       </div>
     </div>
     <button *ngIf="!isLoading" (click)="login()" class="w-full p-4 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-4">Đăng nhập</button>
