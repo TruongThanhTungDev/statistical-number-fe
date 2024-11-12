@@ -38,7 +38,7 @@
       <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
         Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
       </div>
-      <div *ngIf="!isLoading" class="content-scroll">
+      <div *ngIf="!isLoading" class="content-scroll" #scrollableDiv  (scroll)="onScroll()">
         <div *ngIf="listData && listData.length">
           <div class="flex gap-4 align-items-center flex-wrap">
             <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
@@ -112,7 +112,7 @@
     <div class="w-full p-2 bg-warning rounded-4 mb-4 text-center font-bold">
       Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
     </div>
-    <div *ngIf="!isLoading" class="content-scroll-md">
+    <div *ngIf="!isLoading" class="content-scroll-md" #scrollableDiv (scroll)="onScroll()">
       <div *ngIf="listData && listData.length">
         <div class="flex gap-2 align-items-center flex-wrap">
           <div *ngFor="let item of listData" class="border-1 border-gray-200 rounded-6" style="width: 23%;">

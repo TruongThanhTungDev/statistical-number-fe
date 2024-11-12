@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Plugins } from "../../utils/plugins";
 import { ApiServices } from "@layout/api.services";
 import { HttpResponse } from "@angular/common/http";
@@ -10,7 +10,8 @@ import { ToastService } from "../../utils/toast.service";
   templateUrl: './statistic.component.html',
   styleUrls: ['statistic.component.scss']
 })
-export class StatisticComponent implements OnInit {
+export class StatisticComponent implements OnInit, AfterViewInit {
+  @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
   startDate = new Date('2010-01-01');
   endDate = new Date(Date.now() - 86400000);
   minDate: any;
@@ -21,19 +22,28 @@ export class StatisticComponent implements OnInit {
   plugins = new Plugins();
   REQUEST_URL = 'api/v1/search';
   isLoading = false;
-  isShowSearch = false
+  isShowSearch = false;
+  isLoadmore = false;
+  scrollHeight = '';
+  previousScrollHeight = 0
+  page = 0;
+  totalPages = 0;
   constructor(
     private apiService: ApiServices,
     private toast: ToastService
   ) {}
   ngOnInit(): void {
     this.getAllData();
+    this.scrollHeight = this.plugins.calculateScrollHeight(-20);
   }
-  getAllData() {
+  ngAfterViewInit() {
+    this.scrollableDiv?.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+  }
+  getAllData(loadmore = false) {
     this.isLoading = true;
     const params = {
-      page: 0,
-      size: 100000,
+      page: this.page,
+      size: 100,
       filter: this.filter(),
       sort: ['id', 'desc']
     };
@@ -42,11 +52,21 @@ export class StatisticComponent implements OnInit {
         if (res.body.code === 200) {
           this.isLoading = false;
           if (res.body.result.content.length) {
-            this.listData = res.body.result.content.map((item: any) => ({
-              ...item,
-              date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY'),
-              isHighlight: false
-            }));
+            this.totalPages = res.body.result.totalPages;
+            if (loadmore) {
+              const result = res.body.result.content.map((item: any) => ({
+                ...item,
+                date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY'),
+                isHighlight: false
+              }));
+              this.listData = this.listData.concat(result);
+            } else {
+              this.listData = res.body.result.content.map((item: any) => ({
+                ...item,
+                date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY'),
+                isHighlight: false
+              }));
+            }
           } else {
             this.listData = [];
           }
@@ -77,7 +97,7 @@ export class StatisticComponent implements OnInit {
               ...item,
               isHighlight: false
             }));
-            this.isShowSearch = false
+            this.isShowSearch = false;
             this.listDataSearch = res.body.result.content;
           }
         } else {
@@ -109,5 +129,14 @@ export class StatisticComponent implements OnInit {
   }
   selectEndDate(event: Date) {
     this.maxDate = event;
+  }
+  onScroll() {
+    const scrollElement = this.scrollableDiv.nativeElement;
+    if (scrollElement.scrollTop + scrollElement.clientHeight >= scrollElement.scrollHeight) {
+      if (this.page < this.totalPages) {
+        this.page += 1;
+        this.getAllData(true);
+      }
+    }
   }
 }
