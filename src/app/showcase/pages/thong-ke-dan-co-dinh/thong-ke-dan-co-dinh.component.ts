@@ -21,6 +21,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
   listDataSearch: any[] = [];
   plugins = new Plugins();
   isLoading = false;
+  isShowSearch = false
   page = 0;
   first = 0;
   size = 15;
@@ -39,7 +40,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.scrollHeight = this.plugins.calculateScrollHeight();
+    this.scrollHeight = this.plugins.calculateScrollHeight(-20);
     this.searchThongKeDanCoDinh();
   }
   changeRowTable(event: any) {
@@ -69,6 +70,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
           endDate: this.plugins.formatDateWithType(item.endDate, 'YYYYMMDD', 'DD/MM/YYYY')
         }));
         this.totalItems = res.body.result.totalElements;
+        this.isShowSearch = false
       }
     });
   }
@@ -84,7 +86,6 @@ export class ThongKeDanCoDinhComponent implements OnInit {
     this.searchThongKeDanCoDinh();
   }
   selectRow(data) {
-    console.log('data :>> ', data);
     this.router.navigate(['/tra-cuu-dan-dac-biet'], {
       queryParams: {
         data: data.data,

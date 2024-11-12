@@ -46,6 +46,12 @@ export class SidebarComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    const url = this.router.url.split('/')[1].split('?')[0];
+    if (url) {
+      this.menuActive = url
+    } else {
+      this.router.navigate(['/thong-ke-giai-dac-biet']);
+    }
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       const clearUrl = event.url.split('/')[1].split('?')[0];
       if (clearUrl) {

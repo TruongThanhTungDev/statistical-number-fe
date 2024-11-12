@@ -28,6 +28,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
     const value = 30 + i * 5;
     return { label: value, value: value, key: value };
   });
+  isShowSearch = false
   REQUEST_URL = 'api/v1/date-values-history/search';
   sort = ['id', 'desc'];
   constructor(
@@ -36,7 +37,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.scrollHeight = this.plugins.calculateScrollHeight();
+    this.scrollHeight = this.plugins.calculateScrollHeight(-20);
     this.searchThongKeDanTheoNgay();
   }
   selectStartDate(event: Date) {
@@ -61,7 +62,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
       page: this.page,
       size: this.size,
       filter: this.filter(),
-      sort: this.sort,
+      sort: this.sort
     };
     this.apiService.getOption(this.REQUEST_URL, params, '').subscribe((res: HttpResponse<any>) => {
       if (res.body.code === 200) {
@@ -75,6 +76,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
           createDate: this.plugins.formatDateWithType(item.createDate, 'YYYYMMDDHHmmss', 'DD/MM/YYYY')
         }));
         this.totalItems = res.body.result.totalElements;
+        this.isShowSearch = false;
       }
     });
   }

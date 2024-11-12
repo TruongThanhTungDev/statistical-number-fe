@@ -1,58 +1,132 @@
-<div class="container-body">
-  <div class="shadow-2 bg-white p-4 border-round-2xl w-full h-full flex flex-column flex-1">
-    <div class="flex gap-4 h-full">
-      <div class="border-right-1 border-gray-200 pr-4">
-        <div class="flex flex-column flex-1 gap-4 h-full w-[350px]">
-          <div class="fz-5 font-bold">
-            Tìm kiếm
-          </div>
-          <div class="flex flex-column h-full gap-4">
-            <div>
-              <div class="flex flex-column gap-2">
-                <label for="fixNumber">Số</label>
-                <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listQuantity" [(ngModel)]="quantity" placeholder="Chọn"/>
+<div class="screen-lg">
+  <div class="container-body">
+    <div class="shadow-2 bg-white p-4 border-round-2xl w-full h-full flex flex-column flex-1">
+      <div class="flex gap-4 h-full">
+        <div class="border-right-1 border-gray-200 pr-4">
+          <div class="flex flex-column flex-1 gap-4 h-full w-[350px]">
+            <div class="fz-5 font-bold">
+              Tìm kiếm
+            </div>
+            <div class="flex flex-column h-full gap-4">
+              <div>
+                <div class="flex flex-column gap-2">
+                  <label for="fixNumber">Số</label>
+                  <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listQuantity"
+                    [(ngModel)]="quantity" placeholder="Chọn" />
+                </div>
+              </div>
+              <div>
+                <button pRipple (click)="filterData()"
+                  class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+                  kiếm</button>
               </div>
             </div>
-            <div>
-              <button pRipple (click)="filterData()"
-                class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
-                kiếm</button>
-            </div>
           </div>
         </div>
-      </div>
-      <div class="w-full container-content flex flex-column">
-        <div class="flex flex-column flex-1 max-h-screen">
-          <p-table [rowHover]="true" [value]="listData" dataKey="id" [tableStyle]="{'min-width': '900px', 'width': '100%'}" sortMode="multiple" [scrollable]="true"
-            [scrollHeight]="scrollHeight">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>STT</th>
-                <th pSortableColumn="quantity">SL số của dàn <p-sortIcon field="quantity" /></th>
-                <th pSortableColumn="data" style="width: 30%;">{{'Các số \n trong dàn'}} <p-sortIcon field="data" /></th>
-                <th pSortableColumn="maxGap">Ngưỡng cực đại <p-sortIcon field="maxGap" /></th>
-                <th pSortableColumn="lastDate">Ngày ra gần nhất <p-sortIcon field="lastDate" /></th>
-                <th>Trong khoảng </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-data>
-              <tr class="cursor-pointer" (dblclick)="selectRow(data)">
-                <td>{{data.index}}</td>
-                <td>{{data.quantity}}</td>
-                <td>{{data.data}}</td>
-                <td>{{data.maxGap}}</td>
-                <td>
-                  {{data.lastDate}}
-                </td>
-                <td>
-                  {{data.startDate}} - {{data.endDate}}
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+        <div class="w-full container-content flex flex-column">
+          <div class="flex flex-column flex-1 max-h-screen">
+            <p-table [rowHover]="true" [value]="listData" dataKey="id"
+              [tableStyle]="{'min-width': '900px', 'width': '100%'}" sortMode="multiple" [scrollable]="true"
+              [scrollHeight]="scrollHeight">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>STT</th>
+                  <th pSortableColumn="quantity">SL số của dàn <p-sortIcon field="quantity" /></th>
+                  <th pSortableColumn="data" style="width: 30%;">{{'Các số \n trong dàn'}} <p-sortIcon field="data" />
+                  </th>
+                  <th pSortableColumn="maxGap">Ngưỡng cực đại <p-sortIcon field="maxGap" /></th>
+                  <th pSortableColumn="lastDate">Ngày ra gần nhất <p-sortIcon field="lastDate" /></th>
+                  <th>Trong khoảng </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-data>
+                <tr class="cursor-pointer" (dblclick)="selectRow(data)">
+                  <td>{{data.index}}</td>
+                  <td>{{data.quantity}}</td>
+                  <td>{{data.data}}</td>
+                  <td>{{data.maxGap}}</td>
+                  <td>
+                    {{data.lastDate}}
+                  </td>
+                  <td>
+                    {{data.startDate}} - {{data.endDate}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <p-paginator [first]="first" [rows]="size" [totalRecords]="totalItems"
+            [rowsPerPageOptions]="[5, 10, 15, 20, 30]" (onPageChange)="changePage($event)" />
         </div>
-        <p-paginator [first]="first" [rows]="size" [totalRecords]="totalItems"
-          [rowsPerPageOptions]="[5, 10, 15, 20, 30]" (onPageChange)="changePage($event)"/>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="screen-md relative">
+  <div class="absolute" style="top: -28px; right: 1rem;">
+    <i class="pi pi-search" (click)="isShowSearch = !isShowSearch"></i>
+    <p-sidebar styleClass="h-30rem" [(visible)]="isShowSearch" position="bottom" [closeOnEscape]="true" [showCloseIcon]="false">
+      <ng-template pTemplate="header" styleClass="w-full">
+        <div class="flex justify-content-between mb-4">
+          <div class="text-secondary font-bold">Hủy</div>
+          <div class="font-bold">Tìm kiếm</div>
+          <div><i class="pi pi-search" (click)="filterData()"></i></div>
+        </div>
+      </ng-template>
+      <div class="flex flex-column h-full gap-4">
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Số</label>
+            <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listQuantity" [(ngModel)]="quantity"
+              placeholder="Chọn" />
+          </div>
+        </div>
+        <div>
+          <button pRipple (click)="filterData()"
+            class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+            kiếm</button>
+        </div>
+      </div>
+    </p-sidebar>
+  </div>
+  <div class="container-body-md">
+    <div class="border-round-2xl w-full h-full flex flex-column flex-1">
+      <div class="flex gap-4 h-full">
+        <div class="w-full container-content flex flex-column">
+          <div class="flex flex-column flex-1 max-h-screen">
+            <p-table [rowHover]="true" [value]="listData" dataKey="id"
+              [tableStyle]="{'min-width': '900px', 'width': '100%'}" sortMode="multiple" [scrollable]="true"
+              [scrollHeight]="scrollHeight">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>STT</th>
+                  <th pSortableColumn="quantity">SL số của dàn <p-sortIcon field="quantity" /></th>
+                  <th pSortableColumn="data" style="width: 30%;">{{'Các số \n trong dàn'}} <p-sortIcon field="data" />
+                  </th>
+                  <th pSortableColumn="maxGap">Ngưỡng cực đại <p-sortIcon field="maxGap" /></th>
+                  <th pSortableColumn="lastDate">Ngày ra gần nhất <p-sortIcon field="lastDate" /></th>
+                  <th>Trong khoảng </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-data>
+                <tr class="cursor-pointer" (dblclick)="selectRow(data)">
+                  <td>{{data.index}}</td>
+                  <td>{{data.quantity}}</td>
+                  <td>{{data.data}}</td>
+                  <td>{{data.maxGap}}</td>
+                  <td>
+                    {{data.lastDate}}
+                  </td>
+                  <td>
+                    {{data.startDate}} - {{data.endDate}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <p-paginator [first]="first" [rows]="size" [totalRecords]="totalItems"
+            [rowsPerPageOptions]="[5, 10, 15, 20, 30]" (onPageChange)="changePage($event)" />
+        </div>
       </div>
     </div>
   </div>

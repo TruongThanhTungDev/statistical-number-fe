@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, Output, Renderer2, afterNextRender } from '@angular/core';
+import { ViewportRuler } from '@angular/cdk/scrolling';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, Renderer2, afterNextRender } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -7,9 +8,9 @@ import { filter } from 'rxjs';
   templateUrl: './app.topbar.component.html',
   styleUrls: ['app.topbar.component.scss']
 })
-export class AppTopBarComponent {
+export class AppTopBarComponent implements OnInit {
   tabActive = 'home';
-  headerTitle = ''
+  headerTitle = '';
   listMenu: any[] = [
     {
       key: 'quan-ly-tai-khoan',
@@ -42,11 +43,25 @@ export class AppTopBarComponent {
       icon: 'pi pi-search'
     }
   ];
+  screenWidth: number;
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private viewportRuler: ViewportRuler
   ) {
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+    const url = this.router.url.split('/')[1];
+    if (!url) {
+      this.headerTitle = 'Thống kê giải đặc biệt';
+    } else {
+      const page = this.listMenu.find((item) => item.key === url);
+      if (page) {
+        this.headerTitle = page.name;
+      } else {
+        this.headerTitle = 'Thống kê giải đặc biệt';
+      }
+    }
+    console.log('this.router.url :>> ', this.router.url);
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       const clearUrl = event.url.split('/')[1];
       if (clearUrl === '') {
         this.headerTitle = 'Thống kê giải đặc biệt';
@@ -58,7 +73,15 @@ export class AppTopBarComponent {
           this.headerTitle = 'Thống kê giải đặc biệt';
         }
       }
-    })
+    });
+  }
+  ngOnInit(): void {
+    this.screenWidth = this.viewportRuler.getViewportSize().width;
+
+    // Subscribe to viewport change
+    this.viewportRuler.change().subscribe(() => {
+      this.screenWidth = this.viewportRuler.getViewportSize().width;
+    });
   }
   changeTab(tab: any) {
     this.tabActive = tab.key;

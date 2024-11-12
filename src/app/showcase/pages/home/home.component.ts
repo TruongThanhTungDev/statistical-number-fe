@@ -13,6 +13,7 @@ import { ActivatedRoute } from "@angular/router";
 export class HomeComponent implements OnInit {
   REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number';
   REQUEST_STATISTIC = 'api/v1/statistic';
+  isShowSearch = false
   soCoDinhList: any[] = [
     {
       key: '0',

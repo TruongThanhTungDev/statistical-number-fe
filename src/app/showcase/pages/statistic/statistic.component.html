@@ -76,7 +76,7 @@
         <div class="flex justify-content-between mb-4">
           <div class="text-secondary font-bold">Hủy</div>
           <div class="font-bold">Tìm kiếm</div>
-          <div><i class="pi pi-search" (click)="isShowSearch = !isShowSearch"></i></div>
+          <div><i class="pi pi-search" (click)="searchStatistic()"></i></div>
         </div>
       </ng-template>
       <div class="flex flex-column gap-4">
@@ -107,5 +107,25 @@
         </div>
       </div>
     </p-sidebar>
+  </div>
+  <div class="container-body">
+    <div class="w-full p-2 bg-warning rounded-4 mb-4 text-center font-bold">
+      Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
+    </div>
+    <div *ngIf="!isLoading" class="content-scroll-md">
+      <div *ngIf="listData && listData.length">
+        <div class="flex gap-2 align-items-center flex-wrap">
+          <div *ngFor="let item of listData" class="border-1 border-gray-200 rounded-6" style="width: 23%;">
+            <div class="bg-danger text-center p-3 fz-2 text-white rounded-6"
+              [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
+              {{item.date}}
+            </div>
+            <div class="fz-8 px-3 py-2 text-danger text-center font-bold">
+              {{item.value}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

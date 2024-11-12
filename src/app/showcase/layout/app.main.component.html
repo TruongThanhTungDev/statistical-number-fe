@@ -1,4 +1,4 @@
-<div class="layout-wrapper p-4 h-full overflow-hidden container-main-lg gap-4">
+<div *ngIf="screenWidth > 900" class="layout-wrapper p-4 h-full overflow-hidden flex gap-4">
   <sidebar-component class="h-full"></sidebar-component>
   <div class="w-full">
     <div class="mb-4">
@@ -9,7 +9,7 @@
     </div>
   </div>
 </div>
-<div class="container-main-md flex-column h-full">
+<div *ngIf="screenWidth <= 900" class="flex flex-column h-full">
   <div class="bg-white w-full flex align-items-center justify-content-between py-2 px-4">
     <sidebar-component class="h-full"></sidebar-component>
     <app-topbar></app-topbar>
