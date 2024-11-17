@@ -62,7 +62,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
       if (res.body.code === 200) {
         this.isLoading = false;
         if (res.body.result.dateValues.length) {
-          this.listData = this.formatDateByWeek(res.body.result.dateValues);
+          this.listData = this.formatDateByWeek(res.body.result.dateValues)
           this.dateList = res.body.result.dateList;
         } else {
           this.listData = [];
@@ -83,7 +83,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
   }
   formatDateByWeek(data: any[]) {
     if (!data.length) return;
-    let grouped: { [weekNumber: number]: Item[] } = {};
+    let grouped: any = {};
     data.forEach((item) => {
       const dateStr = item.date.toString();
       const year = parseInt(dateStr.substring(0, 4), 10);
@@ -92,37 +92,57 @@ export class StatisticComponent implements OnInit, AfterViewInit {
       const date = new Date(year, month, day);
       const firstDayOfYear = new Date(year, 0, 1);
       const weekNumber = Math.floor((+date - +firstDayOfYear + firstDayOfYear.getDay() * 86400000) / (7 * 86400000));
-      if (!grouped[weekNumber]) {
-        grouped[weekNumber] = [item];
+      if (!grouped[year]) {
+        grouped[year] = {
+        };
+      }
+      if (!grouped[year][weekNumber]) {
+        grouped[year][weekNumber] = [item];
       } else {
-        grouped[weekNumber].push(item);
+        grouped[year][weekNumber].push(item);
       }
     });
-    Object.keys(grouped).forEach((weekNumber) => {
-      const weekDays: Item[] = grouped[weekNumber];
-      const date = new Date(moment(weekDays[0].date, 'YYYYMMDD').format('YYYY-MM-DD'));
-      const dayOfWeek = date.getDay();
-      const diff = date.getDate() - dayOfWeek + (dayOfWeek == 0 ? -6 : 1);
-      const firstDayOfWeek = new Date(date.setDate(diff));
-      for (let i = 0; i < 7; i++) {
-        const dayOfWeek = new Date(firstDayOfWeek);
-        dayOfWeek.setDate(firstDayOfWeek.getDate() + i);
-        const formattedDate = dayOfWeek.toISOString().slice(0, 10).replace(/-/g, '');
+    Object.keys(grouped).forEach((year) => {
+    //   // Lặp qua từng năm
+      const weeks = grouped[parseInt(year)]; // Lấy các tuần trong năm
+      Object.keys(weeks).forEach((weekNumber) => {
+        const weekDays: Item[] = weeks[parseInt(weekNumber)];
+        const date = new Date(moment(weekDays[0].date.toString(), 'YYYYMMDD').format('YYYY-MM-DD'));
+        const dayOfWeek = date.getDay();
+        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+        const firstDayOfWeek = new Date(date.setDate(diff));
 
-        if (weekDays.length !== 7) {
-          if (!weekDays.some((item) => item.date.toString() === formattedDate)) {
-            weekDays.push({
-              id: 0,
-              date: +formattedDate,
-              value: '',
-              isActive: 0
-            });
+        // Điền các ngày thiếu trong tuần
+        for (let i = 0; i < 7; i++) {
+          const dayOfWeek = new Date(firstDayOfWeek);
+          dayOfWeek.setDate(firstDayOfWeek.getDate() + i);
+          const formattedDate = dayOfWeek.toISOString().slice(0, 10).replace(/-/g, '');
+
+          // Nếu thiếu ngày nào trong tuần, thêm vào weekDays
+          if (weekDays.length !== 7) {
+            if (!weekDays.some((item) => item.date.toString() === formattedDate)) {
+              weekDays.push({
+                id: 0,
+                date: +formattedDate,
+                value: '',
+                isActive: 0
+              });
+            }
           }
         }
-      }
-      weekDays.sort((a, b) => a.date - b.date);
+
+        // Sắp xếp tuần theo thứ tự ngày trong tuần
+        weekDays.sort((a, b) => a.date - b.date);
+      });
     });
-    return Object.values(grouped);
+    const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el))
+    let resultData = []
+    mapData.forEach(item => {
+      item.forEach(el => {
+        resultData.push(el)
+      })
+    })
+    return resultData
   }
   convertToDate(date: any) {
     return date ? new Date(date.toString().substring(0, 4), date.toString().substring(4, 6) - 1, date.toString().substring(6, 8)) : '';
