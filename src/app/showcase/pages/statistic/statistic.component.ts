@@ -193,6 +193,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
     return data ? +data.toString().charAt(0) + +data.toString().charAt(data.length - 1) : '';
   }
   markDate(data) {
+    if (!this.dateList) return false
     if (!data.id) return false
     return this.dateList.some((item) => data.date >= item.from && data.date <= item.to - 1)
   }
