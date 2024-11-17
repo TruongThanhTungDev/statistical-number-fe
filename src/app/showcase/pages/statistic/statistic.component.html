@@ -72,7 +72,7 @@
                   {{data.value}}
                 </div>
                 <div class="font-bold">
-                  {{data.id && data.date ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : ''}}
+                  {{data.id && data.date ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : data.id && !data.value ? 'Tết' : ''}}
                 </div>
                 <div *ngIf="start" class="text-blue-500 font-bold font-italic">
                   {{getFirstChar(data.value)}}
