@@ -103,8 +103,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
       }
     });
     Object.keys(grouped).forEach((year) => {
-    //   // Lặp qua từng năm
-      const weeks = grouped[parseInt(year)]; // Lấy các tuần trong năm
+      const weeks = grouped[parseInt(year)];
       Object.keys(weeks).forEach((weekNumber) => {
         const weekDays: Item[] = weeks[parseInt(weekNumber)];
         const date = new Date(moment(weekDays[0].date.toString(), 'YYYYMMDD').format('YYYY-MM-DD'));
@@ -112,13 +111,11 @@ export class StatisticComponent implements OnInit, AfterViewInit {
         const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
         const firstDayOfWeek = new Date(date.setDate(diff));
 
-        // Điền các ngày thiếu trong tuần
         for (let i = 0; i < 7; i++) {
           const dayOfWeek = new Date(firstDayOfWeek);
           dayOfWeek.setDate(firstDayOfWeek.getDate() + i);
           const formattedDate = dayOfWeek.toISOString().slice(0, 10).replace(/-/g, '');
 
-          // Nếu thiếu ngày nào trong tuần, thêm vào weekDays
           if (weekDays.length !== 7) {
             if (!weekDays.some((item) => item.date.toString() === formattedDate)) {
               weekDays.push({
@@ -131,7 +128,6 @@ export class StatisticComponent implements OnInit, AfterViewInit {
           }
         }
 
-        // Sắp xếp tuần theo thứ tự ngày trong tuần
         weekDays.sort((a, b) => a.date - b.date);
       });
     });
