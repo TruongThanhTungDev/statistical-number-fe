@@ -27,9 +27,23 @@
             </div>
           </div>
           <div>
-            <button pRipple (click)="searchStatistic()"
+            <button pRipple (click)="getAllDataV2()"
               class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
               kiếm</button>
+          </div>
+        </div>
+        <div class="flex flex-column gap-4">
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Đầu</div>
+            <p-toggleButton [(ngModel)]="start" id="start" name="start" onLabel="On" offLabel="Off" />
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Cuối</div>
+            <p-toggleButton [(ngModel)]="end" id="start" name="start" onLabel="On" offLabel="Off" />
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Tổng</div>
+            <p-toggleButton [(ngModel)]="sum" id="start" name="start" onLabel="On" offLabel="Off" />
           </div>
         </div>
       </div>
@@ -38,20 +52,41 @@
       <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
         Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
       </div>
-      <div *ngIf="!isLoading" class="content-scroll" #scrollableDiv  (scroll)="onScroll()">
-        <div *ngIf="listData && listData.length">
-          <div class="flex gap-4 align-items-center flex-wrap">
-            <div *ngFor="let item of listData" class="w-[130px] border-1 border-gray-200 rounded-6">
-              <div class="bg-danger text-center p-3 text-white rounded-6"
-                [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
-                {{item.date}}
-              </div>
-              <div class="fz-18 p-4 text-danger text-center font-bold">
-                {{item.value}}
-              </div>
-            </div>
-          </div>
-        </div>
+      <div *ngIf="!isLoading" class="content-scroll relative">
+        <table class="w-full border-1 border-gray-200 relative">
+          <thead class="sticky top-0">
+            <tr class="py-2 bg-danger text-white font-bold">
+              <th>Thứ hai</th>
+              <th>Thứ ba</th>
+              <th>Thứ tư</th>
+              <th>Thứ năm</th>
+              <th>Thứ sáu</th>
+              <th>Thứ bảy</th>
+              <th>Chủ nhật</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listData">
+              <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200" [class]="markDate(data) ? 'bg-warning' : ''">
+                <div class="text-danger font-bold fz-6">
+                  {{data.value}}
+                </div>
+                <div class="font-bold">
+                  {{data.id && data.date ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : ''}}
+                </div>
+                <div *ngIf="start" class="text-blue-500 font-bold font-italic">
+                  {{getFirstChar(data.value)}}
+                </div>
+                <div *ngIf="end" class="text-secondary font-bold font-italic">
+                  {{getLastChar(data.value)}}
+                </div>
+                <div *ngIf="sum" class="text-red-500 font-bold font-italic">
+                  {{totalNumber(data.value)}}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
         <p-skeleton size="10rem" />
@@ -101,9 +136,23 @@
           </div>
         </div>
         <div>
-          <button pRipple (click)="searchStatistic()"
+          <button pRipple (click)="getAllDataV2()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Đầu</div>
+            <p-toggleButton [(ngModel)]="start" id="start" name="start" onLabel="On" offLabel="Off" />
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Cuối</div>
+            <p-toggleButton [(ngModel)]="end" id="start" name="start" onLabel="On" offLabel="Off" />
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="start">Tổng</div>
+            <p-toggleButton [(ngModel)]="sum" id="start" name="start" onLabel="On" offLabel="Off" />
+          </div>
         </div>
       </div>
     </p-sidebar>
@@ -112,20 +161,42 @@
     <div class="w-full p-2 bg-warning rounded-4 mb-4 text-center font-bold">
       Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
     </div>
-    <div *ngIf="!isLoading" class="content-scroll-md" #scrollableDiv (scroll)="onScroll()">
-      <div *ngIf="listData && listData.length">
-        <div class="flex gap-2 align-items-center flex-wrap">
-          <div *ngFor="let item of listData" class="border-1 border-gray-200 rounded-6" style="width: 23%;">
-            <div class="bg-danger text-center p-3 fz-2 text-white rounded-6"
-              [class]="listDataSearch.length && checkingMarkStatistic(item) ? 'bg-warning' : ''">
-              {{item.date}}
-            </div>
-            <div class="fz-8 px-3 py-2 text-danger text-center font-bold">
-              {{item.value}}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div *ngIf="!isLoading" class="content-scroll relative">
+      <table class="w-full border-1 border-gray-200 relative">
+        <thead class="sticky top-0">
+          <tr class="py-2 bg-danger text-white font-bold">
+            <th>Thứ hai</th>
+            <th>Thứ ba</th>
+            <th>Thứ tư</th>
+            <th>Thứ năm</th>
+            <th>Thứ sáu</th>
+            <th>Thứ bảy</th>
+            <th>Chủ nhật</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData">
+            <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200"
+              [class]="markDate(data) ? 'bg-warning' : ''">
+              <div class="text-danger font-bold fz-6">
+                {{data.value}}
+              </div>
+              <div class="font-bold">
+                {{data.id && data.date ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : ''}}
+              </div>
+              <div *ngIf="start" class="text-blue-500 font-bold font-italic">
+                {{getFirstChar(data.value)}}
+              </div>
+              <div *ngIf="end" class="text-secondary font-bold font-italic">
+                {{getLastChar(data.value)}}
+              </div>
+              <div *ngIf="sum" class="text-red-500 font-bold font-italic">
+                {{totalNumber(data.value)}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
