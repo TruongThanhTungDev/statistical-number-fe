@@ -87,7 +87,7 @@
               {{data.lastValue}})
             </div>
           </div>
-          <div *ngIf="data.check === 1 && data.maxEndDate">
+          <div *ngIf="data.check === 1 && data.maxEndDate" class="flex flex-column gap-4">
             <div>
               Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
             </div>
@@ -98,14 +98,14 @@
             </div>
             <div>
               <span class="font-bold text-danger-2">Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày</span> (kể
-              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt - {{data.lastValue}})
+              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt - {{data.maxStartValue}})
               đến
               <span class="font-bold text-primary">{{data.maxEndDate}}</span>
-              (giải đặc biệt - {{data.lastValue}})
+              (giải đặc biệt - {{data.maxEndValue}})
             </div>
             <div>
               Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
-                class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - {{data.lastValue}})
+                class="font-bold text-primary">{{data.duringDate}}</span> (giải đặc biệt - {{data.duringValue}})
             </div>
             <div>
               Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
@@ -222,7 +222,7 @@
               {{data.lastValue}})
             </div>
           </div>
-          <div *ngIf="data.check === 1 && data.maxEndDate">
+          <div *ngIf="data.check === 1 && data.maxEndDate" class="flex flex-column gap-4">
             <div>
               Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
             </div>
@@ -234,14 +234,14 @@
             <div>
               <span class="font-bold text-danger-2">Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày</span> (kể
               cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt -
-              {{data.lastValue}})
+              {{data.maxStartValue}})
               đến
               <span class="font-bold text-primary">{{data.maxEndDate}}</span>
-              (giải đặc biệt - {{data.lastValue}})
+              (giải đặc biệt - {{data.maxEndValue}})
             </div>
             <div>
               Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
-                class="font-bold text-primary">{{data.lastDate}}</span> (giải đặc biệt - {{data.lastValue}})
+                class="font-bold text-primary">{{data.duringDate}}</span> (giải đặc biệt - {{data.duringValue}})
             </div>
             <div>
               Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính

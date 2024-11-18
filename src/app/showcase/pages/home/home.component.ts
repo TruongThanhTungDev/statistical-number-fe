@@ -124,7 +124,8 @@ export class HomeComponent implements OnInit {
             endDate: this.plugins.formatDateWithType(res.body.result.endDate, 'YYYYMMDD', 'DD-MM-YYYY'),
             maxStartDate: res.body.result.maxStartDate ? this.plugins.formatDateWithType(res.body.result.maxStartDate, 'YYYYMMDD', 'DD-MM-YYYY') : 0,
             maxEndDate: res.body.result.maxEndDate ? this.plugins.formatDateWithType(res.body.result.maxEndDate, 'YYYYMMDD', 'DD-MM-YYYY') : 0,
-            lastDate: this.plugins.formatDateWithType(res.body.result.lastDate, 'YYYYMMDD', 'DD-MM-YYYY')
+            lastDate: this.plugins.formatDateWithType(res.body.result.lastDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+            duringDate: this.plugins.formatDateWithType(res.body.result.duringDate, 'YYYYMMDD', 'DD-MM-YYYY')
           };
           this.toast.success('Tìm kiếm dữ liệu thành công!');
         } else {
@@ -175,7 +176,8 @@ export class HomeComponent implements OnInit {
       endDate: this.plugins.formatDateWithType(dataOrigin.endDate, 'YYYYMMDD', 'DD-MM-YYYY'),
       maxStartDate: dataOrigin.maxStartDate ? this.plugins.formatDateWithType(dataOrigin.maxStartDate, 'YYYYMMDD', 'DD-MM-YYYY') : 0,
       maxEndDate: dataOrigin.maxEndDate ? this.plugins.formatDateWithType(dataOrigin.maxEndDate, 'YYYYMMDD', 'DD-MM-YYYY') : 0,
-      lastDate: this.plugins.formatDateWithType(dataOrigin.lastDate, 'YYYYMMDD', 'DD-MM-YYYY')
+      lastDate: this.plugins.formatDateWithType(dataOrigin.lastDate, 'YYYYMMDD', 'DD-MM-YYYY'),
+      duringDate: this.plugins.formatDateWithType(dataOrigin.duringDate, 'YYYYMMDD', 'DD-MM-YYYY')
     };
   }
   selectStartDate(event: Date) {

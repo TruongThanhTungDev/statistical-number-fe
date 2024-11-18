@@ -18,13 +18,13 @@ interface Item {
 })
 export class StatisticComponent implements OnInit, AfterViewInit {
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
-  startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+  startDate = new Date(moment().subtract(1, 'months').toDate());
+  endDate = new Date();
   minDate: any;
   maxDate: any;
   quantity: any;
   listData: any[];
-  dateList: any[]
+  dateList: any[];
   listDataSearch: any[] = [];
   plugins = new Plugins();
   REQUEST_URL = 'api/v1/search';
@@ -48,38 +48,40 @@ export class StatisticComponent implements OnInit, AfterViewInit {
     this.getAllDataV2();
     this.scrollHeight = this.plugins.calculateScrollHeight(-20);
   }
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   getAllDataV2() {
     this.isLoading = true;
     const params = {
       startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
-      data: this.quantity ? this.quantity.split(",") : []
+      data: this.quantity ? this.quantity.split(',') : []
       // data: [12, 61, 91, 94, 87, 78, 38, 22, 77, 15, 73, 26, 84, 33, 64, 67, 55, 74, 58, 88, 62, 34, 51, 93, 71, 49, 41, 23, 60, 37, 29, 45, 57, 42, 13, 54, 66, 2, 35, 43, 19, 53, 95, 48, 92, 50, 28, 9, 69, 4, 65, 36, 81, 24, 47, 89, 40, 32, 97, 75]
     };
-    this.apiService.postOption(this.REQUEST_URL_V2, params, '').subscribe((res: HttpResponse<any>) => {
-      if (res.body.code === 200) {
-        this.isLoading = false;
-        if (res.body.result.dateValues.length) {
-          this.listData = this.formatDateByWeek(res.body.result.dateValues)
-          this.dateList = res.body.result.dateList;
-        } else {
-          this.listData = [];
-          this.dateList = []
+    this.apiService.postOption(this.REQUEST_URL_V2, params, '').subscribe(
+      (res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
           this.isLoading = false;
+          if (res.body.result.dateValues.length) {
+            this.listData = this.formatDateByWeek(res.body.result.dateValues);
+            this.dateList = res.body.result.dateList;
+          } else {
+            this.listData = [];
+            this.dateList = [];
+            this.isLoading = false;
+          }
+        } else {
+          this.isLoading = false;
+          this.listData = [];
+          this.dateList = [];
+          this.toast.error(res.body.result);
         }
-      } else {
-        this.isLoading = false;
-        this.listData = [];
-        this.dateList = [];
-      }
-    },
+      },
       () => {
         this.isLoading = false;
         this.listData = [];
         this.dateList = [];
-    });
+      }
+    );
   }
   formatDateByWeek(data: any[]) {
     if (!data.length) return;
@@ -93,8 +95,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
       const firstDayOfYear = new Date(year, 0, 1);
       const weekNumber = Math.floor((+date - +firstDayOfYear + firstDayOfYear.getDay() * 86400000) / (7 * 86400000));
       if (!grouped[year]) {
-        grouped[year] = {
-        };
+        grouped[year] = {};
       }
       if (!grouped[year][weekNumber]) {
         grouped[year][weekNumber] = [item];
@@ -131,14 +132,14 @@ export class StatisticComponent implements OnInit, AfterViewInit {
         weekDays.sort((a, b) => a.date - b.date);
       });
     });
-    const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el))
-    let resultData = []
-    mapData.forEach(item => {
-      item.forEach(el => {
-        resultData.push(el)
-      })
-    })
-    return resultData
+    const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el));
+    let resultData = [];
+    mapData.forEach((item) => {
+      item.forEach((el) => {
+        resultData.push(el);
+      });
+    });
+    return resultData;
   }
   convertToDate(date: any) {
     return date ? new Date(date.toString().substring(0, 4), date.toString().substring(4, 6) - 1, date.toString().substring(6, 8)) : '';
@@ -209,8 +210,8 @@ export class StatisticComponent implements OnInit, AfterViewInit {
     return data ? +data.toString().charAt(0) + +data.toString().charAt(data.length - 1) : '';
   }
   markDate(data) {
-    if (!this.dateList) return false
-    if (!data.id) return false
-    return this.dateList.some((item) => data.date >= item.from && data.date <= item.to - 1)
+    if (!this.dateList) return false;
+    if (!data.id) return false;
+    return this.dateList.some((item) => data.date >= item.from && data.date <= item.to - 1);
   }
 }
