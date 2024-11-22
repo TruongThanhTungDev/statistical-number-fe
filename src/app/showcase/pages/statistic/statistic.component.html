@@ -27,6 +27,12 @@
             </div>
           </div>
           <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Ngưỡng cực đại</label>
+              <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
+            </div>
+          </div>
+          <div>
             <button pRipple (click)="getAllDataV2()"
               class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
               kiếm</button>
@@ -133,6 +139,12 @@
             <label for="fixNumber">Đến ngày</label>
             <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
               [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Ngưỡng cực đại</label>
+            <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
           </div>
         </div>
         <div>
