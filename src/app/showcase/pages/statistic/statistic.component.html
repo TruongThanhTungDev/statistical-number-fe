@@ -33,7 +33,7 @@
             </div>
           </div>
           <div>
-            <button pRipple (click)="getAllDataV2()"
+            <button pRipple (click)="getAllDataV2(true)"
               class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
               kiếm</button>
           </div>
@@ -117,7 +117,7 @@
         <div class="flex justify-content-between mb-4">
           <div class="text-secondary font-bold">Hủy</div>
           <div class="font-bold">Tìm kiếm</div>
-          <div><i class="pi pi-search" (click)="searchStatistic()"></i></div>
+          <div><i class="pi pi-search" (click)="getAllDataV2(true)"></i></div>
         </div>
       </ng-template>
       <div class="flex flex-column gap-4">
@@ -148,7 +148,7 @@
           </div>
         </div>
         <div>
-          <button pRipple (click)="getAllDataV2()"
+          <button pRipple (click)="getAllDataV2(true)"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>
