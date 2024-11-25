@@ -220,4 +220,9 @@ export class StatisticComponent implements OnInit, AfterViewInit {
     if (!data.id) return false;
     return this.dateList.some((item) => data.date >= item.from && data.date <= item.to);
   }
+  checkQuantitySearch(quan: any) {
+    if (!this.quantity) return false 
+    if (!this.quantity.length) return false
+    return this.quantity.split(",").map(item => +item).includes(+quan)
+  }
 }

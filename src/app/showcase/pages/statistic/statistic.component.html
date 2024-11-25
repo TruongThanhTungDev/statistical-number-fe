@@ -74,7 +74,7 @@
           <tbody>
             <tr *ngFor="let item of listData">
               <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200" [class]="markDate(data) ? 'bg-warning' : ''">
-                <div class="text-danger font-bold fz-6">
+                <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
                   {{data.value}}
                 </div>
                 <div class="font-bold">
@@ -190,7 +190,7 @@
           <tr *ngFor="let item of listData">
             <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200"
               [class]="markDate(data) ? 'bg-warning' : ''">
-              <div class="text-danger font-bold fz-6">
+              <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
                 {{data.value}}
               </div>
               <div class="font-bold">
