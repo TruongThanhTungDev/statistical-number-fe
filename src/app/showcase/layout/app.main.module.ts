@@ -37,6 +37,8 @@ import { CapNhatMatKhauComponent } from "../shared/popup/cap-nhat-mat-khau/cap-n
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -66,7 +68,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     PaginatorModule,
     DialogModule,
     SidebarModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    InputTextareaModule
   ],
   declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
