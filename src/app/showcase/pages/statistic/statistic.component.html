@@ -32,6 +32,9 @@
               <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
             </div>
           </div>
+          <div class="flex align-items-center">
+            <p-checkbox [(ngModel)]="isHead" label="Tìm kiếm theo hai số đầu" [binary]="true"/>
+          </div>
           <div>
             <button pRipple (click)="getAllDataV2(true)"
               class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
@@ -146,6 +149,9 @@
             <label for="fixNumber">Ngưỡng cực đại</label>
             <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
           </div>
+        </div>
+        <div class="flex align-items-center">
+          <p-checkbox [(ngModel)]="isHead" label="Tìm kiếm theo hai số đầu" [binary]="true"/>
         </div>
         <div>
           <button pRipple (click)="getAllDataV2(true)"

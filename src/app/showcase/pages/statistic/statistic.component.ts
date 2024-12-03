@@ -23,7 +23,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
   minDate: any;
   maxDate: any;
   quantity: any;
-  gap = 0
+  gap = 0;
   listData: any[];
   dateList: any[];
   listDataSearch: any[] = [];
@@ -40,6 +40,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
   start = false;
   end = false;
   sum = false;
+  isHead = false
   constructor(
     private apiService: ApiServices,
     private toast: ToastService
@@ -56,7 +57,8 @@ export class StatisticComponent implements OnInit, AfterViewInit {
       startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
       data: this.quantity ? this.quantity.split(',') : [],
-      gap: +this.gap
+      gap: +this.gap,
+      head: this.isHead ? 1 : 0
       // data: [12, 61, 91, 94, 87, 78, 38, 22, 77, 15, 73, 26, 84, 33, 64, 67, 55, 74, 58, 88, 62, 34, 51, 93, 71, 49, 41, 23, 60, 37, 29, 45, 57, 42, 13, 54, 66, 2, 35, 43, 19, 53, 95, 48, 92, 50, 28, 9, 69, 4, 65, 36, 81, 24, 47, 89, 40, 32, 97, 75]
     };
     this.apiService.postOption(this.REQUEST_URL_V2, params, '').subscribe(
@@ -67,7 +69,7 @@ export class StatisticComponent implements OnInit, AfterViewInit {
             this.listData = this.formatDateByWeek(res.body.result.dateValues);
             this.dateList = res.body.result.dateList;
             if (isSearch) {
-              this.gap = res.body.result.maxGap
+              this.gap = res.body.result.maxGap;
             }
           } else {
             this.listData = [];
@@ -221,8 +223,11 @@ export class StatisticComponent implements OnInit, AfterViewInit {
     return this.dateList.some((item) => data.date >= item.from && data.date <= item.to);
   }
   checkQuantitySearch(quan: any) {
-    if (!this.quantity) return false 
-    if (!this.quantity.length) return false
-    return this.quantity.split(",").map(item => +item).includes(+quan)
+    if (!this.quantity) return false;
+    if (!this.quantity.length) return false;
+    return this.quantity
+      .split(',')
+      .map((item) => +item)
+      .includes(+quan);
   }
 }
