@@ -38,6 +38,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     DialogModule,
     SidebarModule,
     ToggleButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    InputTextareaModule
   ],
   declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
