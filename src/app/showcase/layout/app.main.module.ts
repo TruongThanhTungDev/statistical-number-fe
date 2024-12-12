@@ -39,6 +39,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ThongKeGiaiDacBietTheoTuanComponent } from "@pages/thong-ke-giai-dac-biet-theo-tuan/thong-ke-giai-dac-biet-theo-tuan.component";
 
 @NgModule({
   imports: [
@@ -73,7 +74,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     CheckboxModule,
     InputTextareaModule
   ],
-  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent],
+  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent, ThongKeGiaiDacBietTheoTuanComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainModule {}

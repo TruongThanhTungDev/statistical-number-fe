@@ -4,6 +4,7 @@ import { HomeComponent } from "@pages/home/home.component";
 import { StatisticComponent } from "@pages/statistic/statistic.component";
 import { ThongKeDanCoDinhComponent } from "@pages/thong-ke-dan-co-dinh/thong-ke-dan-co-dinh.component";
 import { ThongKeDanTheoNgayComponent } from "@pages/thong-ke-dan-theo-ngay/thong-ke-dan-theo-ngay.component";
+import { ThongKeGiaiDacBietTheoTuanComponent } from "@pages/thong-ke-giai-dac-biet-theo-tuan/thong-ke-giai-dac-biet-theo-tuan.component";
 
 export const AppMainRoutes: Routes = [
   {
@@ -25,5 +26,9 @@ export const AppMainRoutes: Routes = [
   {
     path: 'thong-ke-dan-theo-ngay',
     component: ThongKeDanTheoNgayComponent
+  },
+  {
+    path: 'thong-ke-giai-dac-biet-theo-tuan',
+    component: ThongKeGiaiDacBietTheoTuanComponent
   }
 ];

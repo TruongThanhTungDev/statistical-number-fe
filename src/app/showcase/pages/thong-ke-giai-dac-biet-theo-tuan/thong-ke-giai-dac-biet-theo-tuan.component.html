@@ -1,0 +1,68 @@
+<div class="screen-lg">
+  <div class="flex gap-4 container-body">
+    <div class="shadow-2 bg-white p-4 border-round-2xl w-[400px] flex flex-col">
+      <div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
+        <div class="fz-5 font-bold">
+          Tìm kiếm
+        </div>
+        <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Số</label>
+              <textarea rows="5" cols="30" placeholder="Nhập cách nhau bởi dấu phẩy. Ví dụ: 55,10-99,01,.." pInputTextarea [(ngModel)]="quantity"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Từ ngày</label>
+              <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Đến ngày</label>
+              <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <button pRipple (click)="getData()"
+              class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+              kiếm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="shadow-2 bg-white p-4 border-round-2xl content-scroll-x">
+      <div *ngIf="!isLoading" class="relative content-scroll">
+        <table class="w-full border-1 border-gray-200 relative">
+          <thead class="sticky top-0">
+            <tr class="py-2 bg-danger text-white font-bold">
+              <th class="w-[100px] max-w-[100px] px-4">Ngày/Tháng/Năm</th>
+              <th *ngFor="let data of listData" class="w-[100px] max-w-[100px] px-4">
+                {{ data.date }}
+              </th>
+              <th class="px-4 w-[100px] max-w-[100px]">
+                Tổng lượt về
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let number of arrNumber; index as i" class="border-b border-b-gray-200">
+              <td class="text-center border-1 border-gray-200">
+                {{ number }}
+              </td>
+              <td *ngFor="let data of listData; index as j" class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300">
+                {{ data.dataNumber[i].quantity }}
+              </td>
+              <td class="text-center border-1 border-gray-200 ">
+                {{ calcSumNumber(number) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

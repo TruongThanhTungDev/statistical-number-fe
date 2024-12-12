@@ -35,6 +35,18 @@ export class SidebarComponent {
       icon: 'pi pi-table'
     },
     {
+      key: 'thong-ke-giai-dac-biet-theo-tuan',
+      path: '/thong-ke-giai-dac-biet-theo-tuan',
+      name: 'Thống kê giải đặc biệt theo tuần',
+      icon: 'pi pi-calendar-clock'
+    },
+    {
+      key: 'thong-ke-giai-loto-theo-cap',
+      path: '/thong-ke-giai-loto-theo-cap',
+      name: 'Thống kê giải Loto theo cặp',
+      icon: 'pi pi-objects-column'
+    },
+    {
       key: 'tra-cuu-dan-dac-biet',
       path: '/tra-cuu-dan-dac-biet',
       name: 'Tra cứu dàn đặc biệt',

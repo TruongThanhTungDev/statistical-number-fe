@@ -9,7 +9,6 @@
           <div>
             <div class="flex flex-column gap-2">
               <label for="fixNumber">Số</label>
-              <!-- <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" [(ngModel)]="quantity" /> -->
               <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="quantity"></textarea>
             </div>
           </div>
@@ -33,8 +32,9 @@
               <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
             </div>
           </div>
-          <div class="flex align-items-center">
-            <p-checkbox [(ngModel)]="isHead" label="Tìm kiếm theo hai số đầu" [binary]="true"/>
+          <div class="flex gap-2 align-items-center">
+            <div for="find-start">Tìm kiếm theo hai số đầu</div>
+            <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" />
           </div>
           <div>
             <button pRipple (click)="getAllDataV2(true)"
@@ -152,8 +152,9 @@
             <input type="text" pInputText placeholder="Ví dụ: 1,2,3,4,5" type="number" [(ngModel)]="gap" />
           </div>
         </div>
-        <div class="flex align-items-center">
-          <p-checkbox [(ngModel)]="isHead" label="Tìm kiếm theo hai số đầu" [binary]="true"/>
+        <div class="flex gap-2 align-items-center">
+          <div for="find-start">Tìm kiếm theo hai số đầu</div>
+          <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" />
         </div>
         <div>
           <button pRipple (click)="getAllDataV2(true)"
