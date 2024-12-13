@@ -4,6 +4,8 @@ import moment from "moment";
 import { ToastService } from "../../utils/toast.service";
 import { HttpResponse } from "@angular/common/http";
 import { Plugins } from "../../utils/plugins";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { XemKetQuaPopup } from "../../shared/popup/xem-ket-qua/xem-ket-qua.component";
 
 @Component({
   selector: 'thong-ke-giai-dac-biet-theo-tuan',
@@ -23,7 +25,8 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
   REQUEST_URL = 'api/v1/date-multi-values/quantity-values-by-date-and-numbers';
   constructor(
     private apiService: ApiServices,
-    private toast: ToastService
+    private toast: ToastService,
+    private dialogService: DialogService
   ) {}
   ngOnInit(): void {
     this.getData();
@@ -33,7 +36,8 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
     const params = {
       startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
-      numbers: this.quantity.split(",")
+      // numbers: this.quantity ? this.quantity.split(',') : []
+      numbers: ['00', '01', '02', '03', '04']
     };
     this.apiService.postOption(this.REQUEST_URL, params, '').subscribe(
       (res: HttpResponse<any>) => {
@@ -47,10 +51,10 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
           //   ...item,
           //   date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY')
           // }))
-          data.forEach(item => {
-            let dataNumber = []
-            this.arrNumber.forEach(number => {
-              const index = item.numberQuantityItemRes.findIndex(el => el.number === number)
+          data.forEach((item) => {
+            let dataNumber = [];
+            this.arrNumber.forEach((number) => {
+              const index = item.numberQuantityItemRes.findIndex((el) => el.number === number);
               if (index !== -1 && item.numberQuantityItemRes[index].quantity) {
                 dataNumber.push({
                   number,
@@ -64,12 +68,12 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
                   values: ''
                 });
               }
-            })
+            });
             this.listData.push({
               date: item.date,
               dataNumber
-            })
-          })
+            });
+          });
         } else {
           this.isLoading = false;
         }
@@ -100,5 +104,20 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+  viewLoto(data: any) {
+    if (!data.values) return;
+    const modal: DynamicDialogRef = this.dialogService.open(XemKetQuaPopup, {
+      header: 'Xem kết quả cụ thể',
+      width: '25%',
+      modal: true,
+      data: {
+        data
+      },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      }
+    });
   }
 }

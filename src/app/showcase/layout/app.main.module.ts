@@ -40,6 +40,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ThongKeGiaiDacBietTheoTuanComponent } from "@pages/thong-ke-giai-dac-biet-theo-tuan/thong-ke-giai-dac-biet-theo-tuan.component";
+import { XemKetQuaPopup } from "../shared/popup/xem-ket-qua/xem-ket-qua.component";
 
 @NgModule({
   imports: [

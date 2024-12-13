@@ -35,9 +35,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ThemSuaTaiKhoanComponent } from "../shared/popup/them-sua-tai-khoan/them-sua-tai-khoan.component";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { XemKetQuaPopup } from "../shared/popup/xem-ket-qua/xem-ket-qua.component";
+import { DialogService } from "primeng/dynamicdialog";
 
 @NgModule({
-  declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent],
+  declarations: [SidebarComponent, AppComponent, AppMainComponent, AppTopBarComponent, XemKetQuaPopup],
   imports: [
     FormsModule,
     // BrowserModule,
@@ -67,7 +69,8 @@ import { SidebarModule } from 'primeng/sidebar';
     ScrollerModule,
     ToastModule,
     ConfirmDialogModule,
-    SidebarModule
+    SidebarModule,
+    DialogModule
   ],
   providers: [
     {
@@ -79,7 +82,8 @@ import { SidebarModule } from 'primeng/sidebar';
     },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    DialogService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

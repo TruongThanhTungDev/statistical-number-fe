@@ -53,7 +53,7 @@
               <td class="text-center border-1 border-gray-200">
                 {{ number }}
               </td>
-              <td *ngFor="let data of listData; index as j" class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300">
+              <td *ngFor="let data of listData; index as j" class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300" (click)="viewLoto(data.dataNumber[i])">
                 {{ data.dataNumber[i].quantity }}
               </td>
               <td class="text-center border-1 border-gray-200 ">
