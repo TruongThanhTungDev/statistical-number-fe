@@ -6,3 +6,6 @@
   height: calc(100% - 20px);
   overflow-y: auto;
 }
+.content-scroll-x {
+  width: calc(100vw - 400px - 325px - 82px);
+}

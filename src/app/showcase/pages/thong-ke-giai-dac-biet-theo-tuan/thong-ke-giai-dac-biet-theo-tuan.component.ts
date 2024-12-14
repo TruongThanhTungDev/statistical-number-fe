@@ -109,7 +109,7 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
     if (!data.values) return;
     const modal: DynamicDialogRef = this.dialogService.open(XemKetQuaPopup, {
       header: 'Xem kết quả cụ thể',
-      width: '25%',
+      width: '50%',
       modal: true,
       data: {
         data
