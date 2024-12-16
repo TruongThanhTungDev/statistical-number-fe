@@ -87,27 +87,28 @@
         <table class="w-full border-1 border-gray-200 relative">
           <thead class="sticky top-0">
             <tr class="py-2 bg-danger text-white font-bold">
-              <th class="w-[100px] max-w-[100px] px-4">Ngày/Tháng/Năm</th>
-              <th *ngFor="let data of listData" class="w-[100px] max-w-[100px] px-4">
-                {{ data.date }}
-              </th>
-              <th class="px-4 w-[100px] max-w-[100px]">
-                Tổng lượt về
-              </th>
+              <th>Thứ hai</th>
+              <th>Thứ ba</th>
+              <th>Thứ tư</th>
+              <th>Thứ năm</th>
+              <th>Thứ sáu</th>
+              <th>Thứ bảy</th>
+              <th>Chủ nhật</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let number of arrNumberSelected; index as i" class="border-b border-b-gray-200">
-              <td class="text-center border-1 border-gray-200">
-                {{ number }}
-              </td>
-              <td *ngFor="let data of listData; index as j"
-                class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300"
-                (click)="viewLoto(data.dataNumber[i])">
-                {{ data.dataNumber && data.dataNumber.length && data.dataNumber[i].quantity }}
-              </td>
-              <td class="text-center border-1 border-gray-200 ">
-                {{ calcSumNumber(number) }}
+            <tr *ngFor="let item of listData">
+              <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200">
+                <div class="font-bold fz-4 text-danger">
+                  <div *ngFor="let number of data.dataNumber">
+                    <div *ngIf="arrNumberSelected.includes(number.number)">
+                      {{ number.number }} ({{number.quantity ? number.quantity : 0}})
+                    </div>
+                  </div>
+                </div>
+                <div class="font-bold">
+                  {{data.dataNumber.length && !data.isNewYear ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : data.dataNumber.length && data.isNewYear ? 'Tết' : ''}}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -120,7 +121,7 @@
           <thead class="sticky top-0">
             <tr class="py-2 bg-danger text-white font-bold">
               <th class="w-[100px] max-w-[100px] px-4">Ngày/Tháng/Năm</th>
-              <th *ngFor="let data of listData" class="w-[100px] max-w-[100px] px-4">
+              <th *ngFor="let data of listData1" class="w-[100px] max-w-[100px] px-4">
                 {{ data.date }}
               </th>
               <th class="px-4 w-[100px] max-w-[100px]">
@@ -133,7 +134,7 @@
               <td class="text-center border-1 border-gray-200">
                 {{ number }}
               </td>
-              <td *ngFor="let data of listData; index as j"
+              <td *ngFor="let data of listData1; index as j"
                 class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300"
                 (click)="viewLoto(data.dataNumber[i])">
                 {{ data.dataNumber[i].quantity }}
@@ -254,27 +255,29 @@
       <table class="w-full border-1 border-gray-200 relative">
         <thead class="sticky top-0">
           <tr class="py-2 bg-danger text-white font-bold">
-            <th class="w-[100px] max-w-[100px] px-4">Ngày/Tháng/Năm</th>
-            <th *ngFor="let data of listData" class="w-[100px] max-w-[100px] px-4">
-              {{ data.date }}
-            </th>
-            <th class="px-4 w-[100px] max-w-[100px]">
-              Tổng lượt về
-            </th>
+            <th>Thứ hai</th>
+            <th>Thứ ba</th>
+            <th>Thứ tư</th>
+            <th>Thứ năm</th>
+            <th>Thứ sáu</th>
+            <th>Thứ bảy</th>
+            <th>Chủ nhật</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let number of arrNumberSelected; index as i" class="border-b border-b-gray-200">
-            <td class="text-center border-1 border-gray-200">
-              {{ number }}
-            </td>
-            <td *ngFor="let data of listData; index as j"
-              class="text-center border-1 border-gray-200 cursor-pointer hover:bg-yellow-300"
-              (click)="viewLoto(data.dataNumber[i])">
-              {{ data.dataNumber && data.dataNumber.length && data.dataNumber[i].quantity }}
-            </td>
-            <td class="text-center border-1 border-gray-200 ">
-              {{ calcSumNumber(number) }}
+          <tr *ngFor="let item of listData">
+            <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200">
+              <div class="font-bold fz-4 text-danger">
+                <div *ngFor="let number of data.dataNumber">
+                  <div *ngIf="arrNumberSelected.includes(number.number)">
+                    {{ number.number }} ({{number.quantity ? number.quantity : 0}})
+                  </div>
+                </div>
+              </div>
+              <div class="font-bold">
+                {{data.dataNumber.length && !data.isNewYear ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY')
+                : data.dataNumber.length && data.isNewYear ? 'Tết' : ''}}
+              </div>
             </td>
           </tr>
         </tbody>

@@ -24,12 +24,13 @@ export class ThongKeGiaiTheoTuanComponent {
   maxDate: any;
   quantity: any;
   gap = 0;
-  listData: any[];
+  listData: any[] = [];
   dateList: any[];
   listDataSearch: any[] = [];
   plugins = new Plugins();
   REQUEST_URL = 'api/v1/search';
   REQUEST_URL_V2 = 'api/v1/statistic-values-on-week';
+  REQUEST_URL_V3 = 'ap1/v1/statistic-frequency'
   isLoading = false;
   isShowSearch = false;
   isLoadmore = false;
@@ -48,6 +49,7 @@ export class ThongKeGiaiTheoTuanComponent {
   ngOnInit(): void {
     // this.getAllData();
     this.getAllDataV2();
+    this.getDataFrequency()
     this.scrollHeight = this.plugins.calculateScrollHeight(-20);
   }
   ngAfterViewInit() {}
@@ -60,9 +62,8 @@ export class ThongKeGiaiTheoTuanComponent {
     this.apiService.postOption(this.REQUEST_URL_V2, params, '').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
-          this.isLoading = false;
           if (res.body.result.items.length) {
-            // this.listData = this.formatDateByWeek(res.body.result.dateValues);
+            this.listData = this.formatDateByWeek(res.body.result.items);
             this.dateList = res.body.result.dateList;
             if (isSearch) {
               this.gap = res.body.result.maxGap;
@@ -89,9 +90,11 @@ export class ThongKeGiaiTheoTuanComponent {
   }
   formatDateByWeek(data: any[]) {
     if (!data.length) return;
-    let grouped: any = {};
-    data.forEach((item) => {
-      item.forEach(el => {
+    let result = []
+    data.forEach((week) => {
+      let resultData = [];
+      let grouped: any = {};
+      week.items.forEach((el) => {
         const dateStr = el.date.toString();
         const year = parseInt(dateStr.substring(0, 4), 10);
         const month = parseInt(dateStr.substring(4, 6), 10) - 1;
@@ -107,9 +110,10 @@ export class ThongKeGiaiTheoTuanComponent {
         } else {
           grouped[year][weekNumber].push(el);
         }
-      })
+      });
+      console.log('grouped :>> ', grouped);
       Object.keys(grouped).forEach((year) => {
-        const weeks = grouped[parseInt(year)];
+        const weeks = year !== 'week' && grouped[parseInt(year)];
         Object.keys(weeks).forEach((weekNumber) => {
           const weekDays: Item[] = weeks[parseInt(weekNumber)];
           const date = new Date(moment(weekDays[0].date.toString(), 'YYYYMMDD').format('YYYY-MM-DD'));
@@ -137,16 +141,34 @@ export class ThongKeGiaiTheoTuanComponent {
           weekDays.sort((a, b) => a.date - b.date);
         });
       });
-      const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el));
-      let resultData = [];
+      const mapData = Object.values(grouped).map((item) => Object.values(item).map(el => el))
       mapData.forEach((item) => {
         item.forEach((el) => {
           resultData.push(el);
         });
       });
-      console.log('resultData :>> ', resultData);
-      // return resultData;
+      result.push({
+        resultData,
+        week: week.week
+      })
     });
+    this.isLoading = false;
+    return result;
+  }
+  getDataFrequency() {
+    // this.isLoading = true
+    const payload = {
+      startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
+      endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
+      head: this.isHead ? 1 : 0
+    };
+    this.apiService.postOption(this.REQUEST_URL_V3, payload, '').subscribe(
+      (res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          console.log('res :>> ', res);
+        }
+      }
+    )
   }
   convertToDate(date: any) {
     return date ? new Date(date.toString().substring(0, 4), date.toString().substring(4, 6) - 1, date.toString().substring(6, 8)) : '';

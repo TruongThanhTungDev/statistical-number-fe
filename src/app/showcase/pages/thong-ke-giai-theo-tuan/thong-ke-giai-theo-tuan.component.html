@@ -32,43 +32,40 @@
       <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
         Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
       </div>
-      <div *ngIf="!isLoading" class="content-scroll relative">
-        <table class="w-full border-1 border-gray-200 relative">
-          <thead class="sticky top-0">
-            <tr class="py-2 bg-danger text-white font-bold">
-              <th>Thứ hai</th>
-              <th>Thứ ba</th>
-              <th>Thứ tư</th>
-              <th>Thứ năm</th>
-              <th>Thứ sáu</th>
-              <th>Thứ bảy</th>
-              <th>Chủ nhật</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of listData">
-              <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200"
-                [class]="markDate(data) ? 'bg-warning' : ''">
-                <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
-                  {{data.value}}
-                </div>
-                <div class="font-bold">
-                  {{data.id && data.date && data.value ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY')
-                  : data.id && data.date && !data.value ? 'Tết' : ''}}
-                </div>
-                <div *ngIf="start" class="text-blue-500 font-bold font-italic">
-                  {{getFirstChar(data.value)}}
-                </div>
-                <div *ngIf="end" class="text-secondary font-bold font-italic">
-                  {{getLastChar(data.value)}}
-                </div>
-                <div *ngIf="sum" class="text-red-500 font-bold font-italic">
-                  {{totalNumber(data.value)}}
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div *ngIf="!isLoading && listData.length" class="content-scroll flex flex-column gap-4">
+        <div *ngFor="let week of listData" class="flex flex-column gap-2">
+          <div class="font-bold">
+            Tuần {{week.week}}
+          </div>
+          <div class="relative">
+            <table class="w-full border-1 border-gray-200 relative">
+              <thead class="sticky top-0">
+                <tr class="py-2 bg-danger text-white font-bold">
+                  <th>Thứ hai</th>
+                  <th>Thứ ba</th>
+                  <th>Thứ tư</th>
+                  <th>Thứ năm</th>
+                  <th>Thứ sáu</th>
+                  <th>Thứ bảy</th>
+                  <th>Chủ nhật</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of week.resultData">
+                  <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200">
+                    <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
+                      {{data.value}}
+                    </div>
+                    <div class="font-bold">
+                      {{data.id && data.date && data.value ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY')
+                      : data.id && data.date && !data.value ? 'Tết' : ''}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
         <p-skeleton size="10rem" />

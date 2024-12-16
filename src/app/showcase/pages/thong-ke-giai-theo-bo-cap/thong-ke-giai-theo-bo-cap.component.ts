@@ -7,6 +7,11 @@ import { ToastService } from "../../utils/toast.service";
 import { HttpResponse } from "@angular/common/http";
 import { Plugins } from "../../utils/plugins";
 
+interface Item {
+  date: number;
+  dataNumber: any[];
+  isNewYear: boolean
+}
 @Component({
   selector: 'thong-ke-giai-theo-bo-cap',
   templateUrl: './thong-ke-giai-theo-bo-cap.component.html',
@@ -19,11 +24,12 @@ export class ThongKeGiaiTheoBoCapComponent {
   maxDate: any;
   quantity: any;
   isHead = false;
-  isCouple = false;
+  isCouple = true;
   isLoading = false;
   isShowSearch = false;
   isShowChoiceNumber = false;
   listData: any[] = [];
+  listData1: any[] = []
   plugins = new Plugins();
   arrNumberSingle = Array.from({ length: 100 }, (_, i) => i.toString().padStart(2, '0'));
   arrNumber = [
@@ -93,7 +99,7 @@ export class ThongKeGiaiTheoBoCapComponent {
   ) {}
   ngOnInit(): void {
     if (this.isCouple) {
-      this.arrNumberSelected = [...this.arrNumber];
+      this.arrNumberSelected = [];
     } else {
       this.arrNumberSelected = [...this.arrNumberSingle];
     }
@@ -113,41 +119,71 @@ export class ThongKeGiaiTheoBoCapComponent {
       // numbers: ['00', '01', '02', '03', '04']
     };
     this.listData = [];
+    this.listData1 = []
     this.apiService.postOption(this.REQUEST_URL, params, '').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
           this.isLoading = false;
-          const data = res.body.result.data.map((item) => ({
-            ...item,
-            date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY')
-          }));
+          if (!this.isCouple) {
+            const data1 = res.body.result.data.map(item => ({
+              ...item,
+              date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY')
+            }))
+            data1.forEach((item) => {
+              let dataNumber = [];
+              this.arrNumberSelected.forEach((number) => {
+                const index = item.numberQuantityItemRes.findIndex((el) => el.number === number);
+                if (index !== -1 && item.numberQuantityItemRes[index].quantity) {
+                  dataNumber.push({
+                    number,
+                    quantity: item.numberQuantityItemRes[index].quantity,
+                    values: item.values
+                  });
+                } else {
+                  dataNumber.push({
+                    number,
+                    quantity: '',
+                    values: ''
+                  });
+                }
+              });
+              this.listData1.push({
+                date: item.date,
+                dataNumber
+              });
+            });
+          } else {
+            const data = res.body.result.data
+            data.forEach((item) => {
+              let dataNumber = [];
+              this.arrNumber.forEach((number) => {
+                const index = item.numberQuantityItemRes.findIndex((el) => el.number === number);
+                if (index !== -1 && item.numberQuantityItemRes[index].quantity) {
+                  dataNumber.push({
+                    number,
+                    quantity: item.numberQuantityItemRes[index].quantity,
+                    values: item.values
+                  });
+                } else {
+                  dataNumber.push({
+                    number,
+                    quantity: '',
+                    values: ''
+                  });
+                }
+              });
+              this.listData.push({
+                date: item.date,
+                dataNumber,
+                isNewYear: item.values ? false : true
+              });
+            });
+            this.listData = this.formatDateByWeek(this.listData);
+          }
           // this.listData = res.body.result.data.map(item => ({
           //   ...item,
           //   date: this.plugins.formatDateWithType(item.date, 'YYYYMMDD', 'DD/MM/YYYY')
           // }))
-          data.forEach((item) => {
-            let dataNumber = [];
-            this.arrNumberSelected.forEach((number) => {
-              const index = item.numberQuantityItemRes.findIndex((el) => el.number === number);
-              if (index !== -1 && item.numberQuantityItemRes[index].quantity) {
-                dataNumber.push({
-                  number,
-                  quantity: item.numberQuantityItemRes[index].quantity,
-                  values: item.values
-                });
-              } else {
-                dataNumber.push({
-                  number,
-                  quantity: '',
-                  values: ''
-                });
-              }
-            });
-            this.listData.push({
-              date: this.getDayOfWeek(item.date) + '\n' +item.date,
-              dataNumber
-            });
-          });
         } else {
           this.isLoading = false;
         }
@@ -156,6 +192,62 @@ export class ThongKeGiaiTheoBoCapComponent {
         this.isLoading = false;
       }
     );
+  }
+  formatDateByWeek(data: any[]) {
+    if (!data.length) return;
+    let grouped: any = {};
+    data.forEach((item) => {
+      const dateStr = item.date.toString();
+      const year = parseInt(dateStr.substring(0, 4), 10);
+      const month = parseInt(dateStr.substring(4, 6), 10) - 1;
+      const day = parseInt(dateStr.substring(6, 8), 10) - 1;
+      const date = new Date(year, month, day);
+      const firstDayOfYear = new Date(year, 0, 1);
+      const weekNumber = Math.floor((+date - +firstDayOfYear + firstDayOfYear.getDay() * 86400000) / (7 * 86400000));
+      if (!grouped[year]) {
+        grouped[year] = {};
+      }
+      if (!grouped[year][weekNumber]) {
+        grouped[year][weekNumber] = [item];
+      } else {
+        grouped[year][weekNumber].push(item);
+      }
+    });
+    Object.keys(grouped).forEach((year) => {
+      const weeks = grouped[parseInt(year)];
+      Object.keys(weeks).forEach((weekNumber) => {
+        const weekDays: Item[] = weeks[parseInt(weekNumber)];
+        const date = new Date(moment(weekDays[0].date.toString(), 'YYYYMMDD').format('YYYY-MM-DD'));
+        const dayOfWeek = date.getDay();
+        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+        const firstDayOfWeek = new Date(date.setDate(diff));
+
+        for (let i = 0; i < 7; i++) {
+          const dayOfWeek = new Date(firstDayOfWeek);
+          dayOfWeek.setDate(firstDayOfWeek.getDate() + i);
+          const formattedDate = dayOfWeek.toISOString().slice(0, 10).replace(/-/g, '');
+
+          if (weekDays.length !== 7) {
+            if (!weekDays.some((item) => item.date.toString() === formattedDate)) {
+              weekDays.push({
+                date: +formattedDate,
+                dataNumber: [],
+                isNewYear: false
+              });
+            }
+          }
+        }
+        weekDays.sort((a, b) => a.date - b.date);
+      });
+    });
+    const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el));
+    let resultData = [];
+    mapData.forEach((item) => {
+      item.forEach((el) => {
+        resultData.push(el);
+      });
+    });
+    return resultData;
   }
   selectStartDate(event: Date) {
     this.minDate = event;
@@ -208,7 +300,7 @@ export class ThongKeGiaiTheoBoCapComponent {
   }
   changeTypeView(event: any) {
     if (event.checked) {
-      this.arrNumberSelected = [...this.arrNumber];
+      this.arrNumberSelected = [];
     } else {
       this.arrNumberSelected = [...this.arrNumberSingle];
     }

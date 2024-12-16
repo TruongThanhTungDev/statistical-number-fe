@@ -18,12 +18,23 @@ export class HeadersInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('token')
     var header = 'Bearer ' + token;
     if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: header,
-          'Accept-Language': 'vi',
-        },
-      });
+      if (request.url.includes('statistic-frequency')) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: header,
+            'Accept': '*/*',
+            'Accept-Language': 'vi',
+            'Access-Control-Allow-Origin': '*/*'
+          }
+        });
+      } else {
+        request = request.clone({
+          setHeaders: {
+            Authorization: header,
+            'Accept-Language': 'vi'
+          }
+        });
+      }
     } else {
       if (token) {
         request = request.clone({
