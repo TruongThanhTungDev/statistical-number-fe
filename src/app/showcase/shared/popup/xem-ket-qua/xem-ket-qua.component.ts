@@ -6,6 +6,7 @@ import { DynamicDialogConfig } from "primeng/dynamicdialog";
   templateUrl: './xem-ket-qua.component.html'
 })
 export class XemKetQuaPopup implements OnInit {
+  isHead = false
   data: any
   listLoto: any[] = [];
   giaiDacBiet: any;
@@ -29,6 +30,7 @@ export class XemKetQuaPopup implements OnInit {
   constructor(public config: DynamicDialogConfig) {}
   ngOnInit(): void {
     this.data = this.config.data.data
+    this.isHead = this.config.data.isHead;
     if (this.data) {
       this.listLoto = this.data.values.split(",")
       this.giaiDacBiet = this.listLoto.slice(0, 1)
@@ -39,7 +41,12 @@ export class XemKetQuaPopup implements OnInit {
       this.giaiNam = this.listLoto.slice(14, 20)
       this.giaiSau = this.listLoto.slice(20, 23)
       this.giaiBay = this.listLoto.slice(23, 27)
-      const dataSplit: any[] = this.listLoto.map((item) => item.slice(item.length - 2, item.length));
+      let dataSplit: any[] = []
+      if (!this.isHead) {
+        dataSplit = this.listLoto.map((item) => item.slice(item.length - 2, item.length))
+      } else {
+        dataSplit = this.listLoto.map((item) => item.slice(0, 2));
+      }
       this.dau0 = dataSplit.filter(item => item.startsWith('0')).join("; ")
       this.dau1 = dataSplit.filter((item) => item.startsWith('1')).join('; ');
       this.dau2 = dataSplit.filter((item) => item.startsWith('2')).join('; ');

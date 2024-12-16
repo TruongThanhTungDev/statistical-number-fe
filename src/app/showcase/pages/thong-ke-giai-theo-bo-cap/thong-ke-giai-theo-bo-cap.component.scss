@@ -1,0 +1,69 @@
+.content-scroll {
+  height: calc(100% - 20px - 48px);
+  overflow-y: auto;
+}
+.content-scroll1 {
+  height: calc(100% - 20px - 48px - 200px);
+  overflow-y: auto;
+}
+.content-scroll-md {
+  height: calc(100% - 20px);
+  overflow-y: auto;
+}
+.content-scroll-md1 {
+  height: calc(100% - 20px);
+  overflow-y: auto;
+}
+.content-scroll-y {
+  height: calc(100% - 20px - 48px);
+}
+.content-scroll-x {
+  width: calc(100vw - 400px - 325px - 82px);
+}
+.horizontal-scroll-last-column {
+  overflow-x: auto;
+}
+.horizontal-scroll-last-column > table > * > tr > th:last-child, .horizontal-scroll-last-column > table > * > tr > td:last-child {
+  position: sticky;
+  min-width: 100px;
+  max-width: auto;
+  right: -1px;
+  z-index: 2;
+}
+.horizontal-scroll-last-column > table > * > tr > th:last-child {
+  background: #FE8787;
+}
+.horizontal-scroll-last-column > table > * > tr > th:last-child::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  box-shadow:-4px 1px 10px rgb(177 177 177)
+}
+.horizontal-scroll-last-column > table > * > tr > td:last-child { 
+  background-color: white;
+}
+.horizontal-scroll-last-column > table > * > tr > td:last-child::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  box-shadow:-4px 1px 10px rgb(177 177 177)
+}
+// first child
+.horizontal-scroll-first-column {
+  overflow-x: auto;
+}
+.horizontal-scroll-first-column > table > * > tr > th:first-child, .horizontal-scroll-first-column > table > * > tr > td:first-child {
+  position: sticky;
+  width: 100px;
+  max-width: 100px;
+  left: 0;
+  z-index: 1;
+}

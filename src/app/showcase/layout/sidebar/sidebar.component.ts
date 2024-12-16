@@ -35,15 +35,15 @@ export class SidebarComponent {
       icon: 'pi pi-table'
     },
     {
-      key: 'thong-ke-giai-dac-biet-theo-tuan',
-      path: '/thong-ke-giai-dac-biet-theo-tuan',
+      key: 'thong-ke-giai-theo-tuan',
+      path: '/thong-ke-giai-theo-tuan',
       name: 'Thống kê giải đặc biệt theo tuần',
       icon: 'pi pi-calendar-clock'
     },
     {
-      key: 'thong-ke-giai-loto-theo-cap',
-      path: '/thong-ke-giai-loto-theo-cap',
-      name: 'Thống kê giải Loto theo cặp',
+      key: 'thong-ke-giai-loto-theo-bo-cap',
+      path: '/thong-ke-giai-loto-theo-bo-cap',
+      name: 'Thống kê giải Loto theo bộ cặp',
       icon: 'pi pi-objects-column'
     },
     {

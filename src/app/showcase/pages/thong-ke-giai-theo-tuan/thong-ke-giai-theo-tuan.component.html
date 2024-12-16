@@ -1,0 +1,165 @@
+<div class="screen-lg">
+  <div class="flex gap-4 container-body">
+    <div class="shadow-2 bg-white p-4 border-round-2xl w-[400px] flex flex-col">
+      <div class="flex flex-column flex-1 gap-4 max-h-screen overflow-y-auto">
+        <div class="fz-5 font-bold">
+          Tìm kiếm
+        </div>
+        <div class="flex flex-column gap-4 border-bottom-1 pb-4 border-gray-200">
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Từ ngày</label>
+              <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-column gap-2">
+              <label for="fixNumber">Đến ngày</label>
+              <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+                [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
+            </div>
+          </div>
+          <div>
+            <button pRipple (click)="getAllDataV2(true)"
+              class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+              kiếm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="shadow-2 bg-white p-4 border-round-2xl content-scroll-x">
+      <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
+        Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
+      </div>
+      <div *ngIf="!isLoading" class="content-scroll relative">
+        <table class="w-full border-1 border-gray-200 relative">
+          <thead class="sticky top-0">
+            <tr class="py-2 bg-danger text-white font-bold">
+              <th>Thứ hai</th>
+              <th>Thứ ba</th>
+              <th>Thứ tư</th>
+              <th>Thứ năm</th>
+              <th>Thứ sáu</th>
+              <th>Thứ bảy</th>
+              <th>Chủ nhật</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listData">
+              <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200"
+                [class]="markDate(data) ? 'bg-warning' : ''">
+                <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
+                  {{data.value}}
+                </div>
+                <div class="font-bold">
+                  {{data.id && data.date && data.value ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY')
+                  : data.id && data.date && !data.value ? 'Tết' : ''}}
+                </div>
+                <div *ngIf="start" class="text-blue-500 font-bold font-italic">
+                  {{getFirstChar(data.value)}}
+                </div>
+                <div *ngIf="end" class="text-secondary font-bold font-italic">
+                  {{getLastChar(data.value)}}
+                </div>
+                <div *ngIf="sum" class="text-red-500 font-bold font-italic">
+                  {{totalNumber(data.value)}}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+        <p-skeleton size="10rem" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="screen-md relative">
+  <div class="absolute" style="top: -28px; right: 1rem;">
+    <i class="pi pi-search" (click)="isShowSearch = !isShowSearch"></i>
+    <p-sidebar styleClass="h-30rem" [(visible)]="isShowSearch" position="bottom" [closeOnEscape]="true"
+      [showCloseIcon]="false">
+      <ng-template pTemplate="header" styleClass="w-full">
+        <div class="flex justify-content-between mb-4">
+          <div class="text-secondary font-bold">Hủy</div>
+          <div class="font-bold">Tìm kiếm</div>
+          <div><i class="pi pi-search" (click)="getAllDataV2(true)"></i></div>
+        </div>
+      </ng-template>
+      <div class="flex flex-column gap-4">
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Từ ngày</label>
+            <p-calendar [(ngModel)]="startDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+              (onSelect)="selectStartDate($event)" [maxDate]="maxDate" placeholder="Chọn ngày" />
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-column gap-2">
+            <label for="fixNumber">Đến ngày</label>
+            <p-calendar [(ngModel)]="endDate" styleClass="w-full" [showButtonBar]="true" dateFormat="dd/mm/yy"
+              [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
+          </div>
+        </div>
+        <div>
+          <button pRipple (click)="getAllDataV2(true)"
+            class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
+            kiếm</button>
+        </div>
+      </div>
+    </p-sidebar>
+  </div>
+  <div class="container-body">
+    <div class="w-full p-2 bg-warning rounded-4 mb-4 text-center font-bold">
+      Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
+    </div>
+    <div *ngIf="!isLoading" class="content-scroll relative">
+      <table class="w-full border-1 border-gray-200 relative">
+        <thead class="sticky top-0">
+          <tr class="py-2 bg-danger text-white font-bold">
+            <th>Thứ hai</th>
+            <th>Thứ ba</th>
+            <th>Thứ tư</th>
+            <th>Thứ năm</th>
+            <th>Thứ sáu</th>
+            <th>Thứ bảy</th>
+            <th>Chủ nhật</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData">
+            <td *ngFor="let data of item" class="text-center py-2 border-1 border-gray-200"
+              [class]="markDate(data) ? 'bg-warning' : ''">
+              <div class="font-bold fz-6" [class]="checkQuantitySearch(data.value) ? 'text-primary' : 'text-danger'">
+                {{data.value}}
+              </div>
+              <div class="font-bold">
+                {{data.id && data.date ? plugins.formatDateWithType(data.date, 'YYYYMMDD', 'DD/MM/YYYY') : ''}}
+              </div>
+              <div *ngIf="start" class="text-blue-500 font-bold font-italic">
+                {{getFirstChar(data.value)}}
+              </div>
+              <div *ngIf="end" class="text-secondary font-bold font-italic">
+                {{getLastChar(data.value)}}
+              </div>
+              <div *ngIf="sum" class="text-red-500 font-bold font-italic">
+                {{totalNumber(data.value)}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -39,8 +39,10 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ThongKeGiaiDacBietTheoTuanComponent } from "@pages/thong-ke-giai-dac-biet-theo-tuan/thong-ke-giai-dac-biet-theo-tuan.component";
+import { ThongKeGiaiDacBietTheoBoComponent } from "@pages/thong-ke-giai-dac-biet-theo-bo/thong-ke-giai-dac-biet-theo-bo.component";
 import { XemKetQuaPopup } from "../shared/popup/xem-ket-qua/xem-ket-qua.component";
+import { ThongKeGiaiTheoBoCapComponent } from "@pages/thong-ke-giai-theo-bo-cap/thong-ke-giai-theo-bo-cap.component";
+import { ThongKeGiaiTheoTuanComponent } from "@pages/thong-ke-giai-theo-tuan/thong-ke-giai-theo-tuan.component";
 
 @NgModule({
   imports: [
@@ -75,7 +77,7 @@ import { XemKetQuaPopup } from "../shared/popup/xem-ket-qua/xem-ket-qua.componen
     CheckboxModule,
     InputTextareaModule
   ],
-  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent, ThongKeGiaiDacBietTheoTuanComponent],
+  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent, ThongKeGiaiDacBietTheoBoComponent, ThongKeGiaiTheoBoCapComponent, ThongKeGiaiTheoTuanComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainModule {}

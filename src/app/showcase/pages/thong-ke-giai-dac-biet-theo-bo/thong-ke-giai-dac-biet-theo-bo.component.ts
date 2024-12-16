@@ -8,17 +8,20 @@ import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { XemKetQuaPopup } from "../../shared/popup/xem-ket-qua/xem-ket-qua.component";
 
 @Component({
-  selector: 'thong-ke-giai-dac-biet-theo-tuan',
-  templateUrl: './thong-ke-giai-dac-biet-theo-tuan.component.html',
-  styleUrls: ['thong-ke-giai-dac-biet-theo-tuan.component.scss']
+  selector: 'thong-ke-giai-dac-biet-theo-bo',
+  templateUrl: './thong-ke-giai-dac-biet-theo-bo.component.html',
+  styleUrls: ['thong-ke-giai-dac-biet-theo-bo.component.scss']
 })
-export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
+export class ThongKeGiaiDacBietTheoBoComponent implements OnInit {
   startDate = new Date(moment().subtract(1, 'months').toDate());
   endDate = new Date();
   minDate: any;
   maxDate: any;
   quantity: any;
+  isHead = false;
   isLoading = false;
+  isShowSearch = false;
+  isShowChoiceNumber = false
   listData: any[] = [];
   plugins = new Plugins();
   arrNumber = Array.from({ length: 100 }, (_, i) => i.toString().padStart(2, '0'));
@@ -36,9 +39,11 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
     const params = {
       startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
-      // numbers: this.quantity ? this.quantity.split(',') : []
-      numbers: ['00', '01', '02', '03', '04']
+      numbers: this.quantity ? this.quantity.split(',') : [],
+      head: this.isHead ? 1 : 0
+      // numbers: ['00', '01', '02', '03', '04']
     };
+    this.listData = [];
     this.apiService.postOption(this.REQUEST_URL, params, '').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
@@ -112,7 +117,8 @@ export class ThongKeGiaiDacBietTheoTuanComponent implements OnInit {
       width: '50%',
       modal: true,
       data: {
-        data
+        data,
+        isHead: this.isHead
       },
       breakpoints: {
         '960px': '75vw',
