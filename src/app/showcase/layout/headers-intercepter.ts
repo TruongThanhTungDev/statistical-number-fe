@@ -22,9 +22,7 @@ export class HeadersInterceptor implements HttpInterceptor {
         request = request.clone({
           setHeaders: {
             Authorization: header,
-            'Accept': '*/*',
-            'Accept-Language': 'vi',
-            'Access-Control-Allow-Origin': '*/*'
+            Accept: 'application/json, text/plain, */*'
           }
         });
       } else {

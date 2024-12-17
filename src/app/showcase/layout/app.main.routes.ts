@@ -7,6 +7,7 @@ import { ThongKeDanTheoNgayComponent } from "@pages/thong-ke-dan-theo-ngay/thong
 import { ThongKeGiaiDacBietTheoBoComponent } from "@pages/thong-ke-giai-dac-biet-theo-bo/thong-ke-giai-dac-biet-theo-bo.component";
 import { ThongKeGiaiTheoBoCapComponent } from "@pages/thong-ke-giai-theo-bo-cap/thong-ke-giai-theo-bo-cap.component";
 import { ThongKeGiaiTheoTuanComponent } from "@pages/thong-ke-giai-theo-tuan/thong-ke-giai-theo-tuan.component";
+import { TraCuuDanDacBietLotoComponent } from "@pages/tra-cuu-dan-dac-biet-loto/tra-cuu-dan-dac-biet-loto.component";
 
 export const AppMainRoutes: Routes = [
   {
@@ -44,5 +45,9 @@ export const AppMainRoutes: Routes = [
   {
     path: 'thong-ke-giai-theo-tuan',
     component: ThongKeGiaiTheoTuanComponent
+  },
+  {
+    path: 'tra-cuu-dan-dac-biet-loto',
+    component: TraCuuDanDacBietLotoComponent
   }
 ];

@@ -3,6 +3,7 @@ import { Plugins } from "../../utils/plugins";
 import { ApiServices } from "@layout/api.services";
 import { HttpResponse } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastService } from "../../utils/toast.service";
 
 @Component({
   selector: 'thong-ke-dan-co-dinh',
@@ -16,16 +17,17 @@ export class ThongKeDanCoDinhComponent implements OnInit {
   quantity = { label: 'Tất cả', value: '', key: 'all' };
   itemsPerPage = 5;
   scrollHeight = '';
-  REQUEST_URL = 'api/v1/date-values-history/search';
+  REQUEST_URL = 'api/v1/date-values-history';
   listData: any[] = [];
   listDataSearch: any[] = [];
   plugins = new Plugins();
   isLoading = false;
-  isShowSearch = false
+  isShowSearch = false;
   page = 0;
   first = 0;
   size = 15;
   totalItems = 0;
+  dataSelected: any;
   listQuantity = Array.from({ length: 10 }, (_, i) => {
     if (i === 0) {
       return { label: 'Tất cả', value: '', key: 'all' };
@@ -37,7 +39,8 @@ export class ThongKeDanCoDinhComponent implements OnInit {
   constructor(
     private apiService: ApiServices,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast: ToastService
   ) {}
   ngOnInit(): void {
     this.scrollHeight = this.plugins.calculateScrollHeight(-20);
@@ -59,7 +62,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
       filter: this.filter(),
       sort: this.sort
     };
-    this.apiService.getOption(this.REQUEST_URL, params, '').subscribe((res: HttpResponse<any>) => {
+    this.apiService.getOption(this.REQUEST_URL, params, '/search').subscribe((res: HttpResponse<any>) => {
       if (res.body.code === 200) {
         this.listData = res.body.result.content.map((item, index) => ({
           ...item,
@@ -70,7 +73,7 @@ export class ThongKeDanCoDinhComponent implements OnInit {
           endDate: this.plugins.formatDateWithType(item.endDate, 'YYYYMMDD', 'DD/MM/YYYY')
         }));
         this.totalItems = res.body.result.totalElements;
-        this.isShowSearch = false
+        this.isShowSearch = false;
       }
     });
   }
@@ -93,5 +96,36 @@ export class ThongKeDanCoDinhComponent implements OnInit {
         endDate: this.plugins.formatDateWithType(data.endDate, 'DD/MM/YYYY', 'YYYYMMDD')
       }
     });
+  }
+  editNumber(data: any) {
+    if (!data) return;
+    this.dataSelected = {
+      data: data.data,
+      id: data.id
+    };
+  }
+  updateData() {
+    this.isLoading = true
+    const payload = {
+      id: this.dataSelected.id,
+      data: JSON.stringify(this.dataSelected.data.split(',').map((item) => +item)),
+      status: 1
+    };
+    this.apiService.put(this.REQUEST_URL, payload, '/update').subscribe(
+      (res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.isLoading = false
+          this.dataSelected = null
+          this.toast.success('Cập nhật dàn số thành công')
+          this.searchThongKeDanCoDinh()
+        } else {
+          this.isLoading = false;
+          this.toast.error('Cập nhật dàn số không thành công');
+        }
+      },
+      () => {
+        this.isLoading = false;
+      }
+    )
   }
 }

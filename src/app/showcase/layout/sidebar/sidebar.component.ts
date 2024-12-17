@@ -51,6 +51,12 @@ export class SidebarComponent {
       path: '/tra-cuu-dan-dac-biet',
       name: 'Tra cứu dàn đặc biệt',
       icon: 'pi pi-search'
+    },
+    {
+      key: 'tra-cuu-dan-dac-biet-loto',
+      path: '/tra-cuu-dan-dac-biet-loto',
+      name: 'Tra cứu dàn đặc biệt Loto',
+      icon: 'pi pi-search-plus'
     }
   ];
   menuActive = 'thong-ke-giai-dac-biet';

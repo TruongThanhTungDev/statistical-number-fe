@@ -43,6 +43,7 @@ import { ThongKeGiaiDacBietTheoBoComponent } from "@pages/thong-ke-giai-dac-biet
 import { XemKetQuaPopup } from "../shared/popup/xem-ket-qua/xem-ket-qua.component";
 import { ThongKeGiaiTheoBoCapComponent } from "@pages/thong-ke-giai-theo-bo-cap/thong-ke-giai-theo-bo-cap.component";
 import { ThongKeGiaiTheoTuanComponent } from "@pages/thong-ke-giai-theo-tuan/thong-ke-giai-theo-tuan.component";
+import { TraCuuDanDacBietLotoComponent } from "@pages/tra-cuu-dan-dac-biet-loto/tra-cuu-dan-dac-biet-loto.component";
 
 @NgModule({
   imports: [
@@ -77,7 +78,7 @@ import { ThongKeGiaiTheoTuanComponent } from "@pages/thong-ke-giai-theo-tuan/tho
     CheckboxModule,
     InputTextareaModule
   ],
-  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent, ThongKeGiaiDacBietTheoBoComponent, ThongKeGiaiTheoBoCapComponent, ThongKeGiaiTheoTuanComponent],
+  declarations: [HomeComponent, StatisticComponent, AccountComponent, ThongKeDanCoDinhComponent, ThongKeDanTheoNgayComponent, ThemSuaTaiKhoanComponent, CapNhatMatKhauComponent, ThongKeGiaiDacBietTheoBoComponent, ThongKeGiaiTheoBoCapComponent, ThongKeGiaiTheoTuanComponent, TraCuuDanDacBietLotoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppMainModule {}

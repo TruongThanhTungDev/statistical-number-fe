@@ -27,10 +27,12 @@ export class ThongKeGiaiTheoTuanComponent {
   listData: any[] = [];
   dateList: any[];
   listDataSearch: any[] = [];
+  dataFrequency: any[] = [];
+  arrNumber = Array.from({ length: 100 }, (_, i) => i.toString().padStart(2, '0'));
   plugins = new Plugins();
   REQUEST_URL = 'api/v1/search';
   REQUEST_URL_V2 = 'api/v1/statistic-values-on-week';
-  REQUEST_URL_V3 = 'ap1/v1/statistic-frequency'
+  REQUEST_URL_V3 = 'api/v1/statistic-frequency';
   isLoading = false;
   isShowSearch = false;
   isLoadmore = false;
@@ -49,7 +51,7 @@ export class ThongKeGiaiTheoTuanComponent {
   ngOnInit(): void {
     // this.getAllData();
     this.getAllDataV2();
-    this.getDataFrequency()
+    this.getDataFrequency();
     this.scrollHeight = this.plugins.calculateScrollHeight(-20);
   }
   ngAfterViewInit() {}
@@ -90,7 +92,7 @@ export class ThongKeGiaiTheoTuanComponent {
   }
   formatDateByWeek(data: any[]) {
     if (!data.length) return;
-    let result = []
+    let result = [];
     data.forEach((week) => {
       let resultData = [];
       let grouped: any = {};
@@ -141,7 +143,7 @@ export class ThongKeGiaiTheoTuanComponent {
           weekDays.sort((a, b) => a.date - b.date);
         });
       });
-      const mapData = Object.values(grouped).map((item) => Object.values(item).map(el => el))
+      const mapData = Object.values(grouped).map((item) => Object.values(item).map((el) => el));
       mapData.forEach((item) => {
         item.forEach((el) => {
           resultData.push(el);
@@ -150,7 +152,7 @@ export class ThongKeGiaiTheoTuanComponent {
       result.push({
         resultData,
         week: week.week
-      })
+      });
     });
     this.isLoading = false;
     return result;
@@ -162,13 +164,28 @@ export class ThongKeGiaiTheoTuanComponent {
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
       head: this.isHead ? 1 : 0
     };
-    this.apiService.postOption(this.REQUEST_URL_V3, payload, '').subscribe(
-      (res: HttpResponse<any>) => {
-        if (res.body.code === 200) {
-          console.log('res :>> ', res);
-        }
+    this.apiService.postOption(this.REQUEST_URL_V3, payload, '').subscribe((res: HttpResponse<any>) => {
+      if (res.body.code === 200) {
+        const data = Object.keys(res.body.result).map((item) => ({
+          number: item,
+          value: res.body.result[item]
+        }));
+        this.arrNumber.forEach(number => {
+          const index = data.findIndex(item => item.number === number)
+          if (index !== -1) {
+            this.dataFrequency.push({
+              number,
+              quantity: data[index].value
+            })
+          } else {
+            this.dataFrequency.push({
+              number,
+              quantity: 0
+            });
+          }
+        })
       }
-    )
+    });
   }
   convertToDate(date: any) {
     return date ? new Date(date.toString().substring(0, 4), date.toString().substring(4, 6) - 1, date.toString().substring(6, 8)) : '';

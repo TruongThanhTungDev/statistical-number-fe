@@ -7,7 +7,7 @@
             <div class="fz-5 font-bold">
               Tìm kiếm
             </div>
-            <div class="flex flex-column h-full gap-4">
+            <div class="flex flex-column gap-4">
               <div>
                 <div class="flex flex-column gap-2">
                   <label for="fixNumber">Số</label>
@@ -19,6 +19,17 @@
                 <button pRipple (click)="filterData()"
                   class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
                   kiếm</button>
+              </div>
+            </div>
+            <div *ngIf="dataSelected" class="flex flex-column gap-4">
+              <div class="flex flex-column gap-2">
+                <label for="fixNumber">Sửa các số trong dàn</label>
+                <textarea rows="5" cols="30" placeholder="Nhập cách nhau bởi dấu phẩy. Ví dụ: 55,10-99,01,.." pInputTextarea
+                  [(ngModel)]="dataSelected.data"></textarea>
+              </div>
+              <div>
+                <button pRipple (click)="updateData()"
+                  class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Cập nhật</button>
               </div>
             </div>
           </div>
@@ -40,7 +51,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-data>
-                <tr class="cursor-pointer" (dblclick)="selectRow(data)">
+                <tr class="cursor-pointer" (dblclick)="selectRow(data)" (click)="editNumber(data)">
                   <td>{{data.index}}</td>
                   <td>{{data.quantity}}</td>
                   <td>{{data.data}}</td>
