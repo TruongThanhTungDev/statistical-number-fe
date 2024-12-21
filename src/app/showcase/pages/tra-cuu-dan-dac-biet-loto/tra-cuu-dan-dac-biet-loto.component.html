@@ -50,6 +50,10 @@
               kiếm</button>
           </div>
         </div>
+        <div class="flex gap-2 align-items-center">
+          <div for="find-start">Đồng bộ</div>
+          <p-toggleButton [(ngModel)]="isConcurOccur" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatistic()"/>
+        </div>
       </div>
     </div>
     <div class="shadow-2 bg-white p-4 border-round-2xl w-full">
@@ -57,7 +61,61 @@
         Thống kê chu kỳ dàn đặc biệt Loto
       </div>
       <div *ngIf="!isLoading">
-        
+        <div *ngIf="data">
+          <div *ngIf="data.check === 0" class="flex flex-column gap-4">
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span>
+            </div>
+          </div>
+          <div *ngIf="data.check === 1 && data.maxEndDate === 0" class="flex flex-column gap-4">
+            <div>
+              Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span>
+              đến ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+            </div>
+            <div>
+              Dàn số <span class="font-bold text-danger-2">{{data.data}}</span> chỉ xuất hiện một lần trong giải đặc biệt ngày
+              <span class="font-bold text-primary">{{data.maxStartDate}}</span>
+            </div>
+            <div>
+              Lần gần đây nhất bộ số <span class="font-bold text-danger-2">{{data.data}}</span> xuất hiện là <span
+                class="font-bold text-primary">{{data.lastDate}}</span> - <span
+                class="font-bold text-danger-2">{{data.maxGap}}</span> ngày trước
+            </div>
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span>
+            </div>
+          </div>
+          <div *ngIf="data.check === 1 && data.maxEndDate" class="flex flex-column gap-4">
+            <div>
+              Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
+            </div>
+            <div>
+              Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span>
+              đến
+              ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+            </div>
+            <div>
+              <span class="font-bold text-danger-2">Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày</span> (kể
+              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span>
+              đến
+              <span class="font-bold text-primary">{{data.maxEndDate}}</span>
+              (giải đặc biệt - {{data.maxEndValue}})
+            </div>
+            <div>
+              Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
+                class="font-bold text-primary">{{data.duringDate}}</span>
+            </div>
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div *ngIf="isLoading">
         <p-skeleton styleClass="mb-4" />
@@ -132,7 +190,62 @@
         Thống kê chu kỳ dàn đặc biệt Truyền thống Loto
       </div>
       <div *ngIf="!isLoading">
-        
+        <div *ngIf="data">
+          <div *ngIf="data.check === 0" class="flex flex-column gap-4">
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> 
+            </div>
+          </div>
+          <div *ngIf="data.check === 1 && data.maxEndDate === 0" class="flex flex-column gap-4">
+            <div>
+              Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span>
+              đến ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+            </div>
+            <div>
+              Dàn số <span class="font-bold text-danger-2">{{data.data}}</span> chỉ xuất hiện một lần trong giải đặc biệt ngày
+              <span class="font-bold text-primary">{{data.maxStartDate}}</span>
+            </div>
+            <div>
+              Lần gần đây nhất bộ số <span class="font-bold text-danger-2">{{data.data}}</span> xuất hiện là <span
+                class="font-bold text-primary">{{data.lastDate}}</span> - <span
+                class="font-bold text-danger-2">{{data.maxGap}}</span> ngày trước
+            </div>
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> 
+            </div>
+          </div>
+          <div *ngIf="data.check === 1 && data.maxEndDate" class="flex flex-column gap-4">
+            <div>
+              Dàn số <span class="font-bold text-danger-2">{{data.data}}</span>
+            </div>
+            <div>
+              Dữ liệu kết quả đặc biệt Truyền Thống từ ngày <span class="font-bold text-primary">{{data.startDate}}</span>
+              đến
+              ngày <span class="font-bold text-primary">{{data.endDate}}</span>
+            </div>
+            <div>
+              <span class="font-bold text-danger-2">Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày</span> (kể
+              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt -
+              {{data.maxStartValue}})
+              đến
+              <span class="font-bold text-primary">{{data.maxEndDate}}</span>
+              (giải đặc biệt - {{data.maxEndValue}})
+            </div>
+            <div>
+              Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
+                class="font-bold text-primary">{{data.duringDate}}</span> (giải đặc biệt - {{data.duringValue}})
+            </div>
+            <div>
+              Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
+              ngày
+              về gần nhất), là ngày: <span class="font-bold text-primary">{{data.lastDate}}</span> 
+            </div>
+          </div>
+        </div>
       </div>
       <div *ngIf="isLoading">
         <p-skeleton styleClass="mb-4" />

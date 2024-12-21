@@ -37,10 +37,28 @@ export class AppTopBarComponent implements OnInit {
       icon: 'pi pi-table'
     },
     {
+      key: 'thong-ke-giai-theo-tuan',
+      path: '/thong-ke-giai-theo-tuan',
+      name: 'Thống kê giải đặc biệt theo tuần',
+      icon: 'pi pi-calendar-clock'
+    },
+    {
+      key: 'thong-ke-giai-loto-theo-bo-cap',
+      path: '/thong-ke-giai-loto-theo-bo-cap',
+      name: 'Thống kê giải Loto theo bộ cặp',
+      icon: 'pi pi-objects-column'
+    },
+    {
       key: 'tra-cuu-dan-dac-biet',
       path: '/tra-cuu-dan-dac-biet',
       name: 'Tra cứu dàn đặc biệt',
       icon: 'pi pi-search'
+    },
+    {
+      key: 'tra-cuu-dan-dac-biet-loto',
+      path: '/tra-cuu-dan-dac-biet-loto',
+      name: 'Tra cứu dàn đặc biệt Loto',
+      icon: 'pi pi-search-plus'
     }
   ];
   screenWidth: number;

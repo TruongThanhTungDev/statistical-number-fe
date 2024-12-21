@@ -12,13 +12,21 @@ import { Plugins } from "../../utils/plugins";
   styleUrls: ['tra-cuu-dan-dac-biet-loto.component.scss']
 })
 export class TraCuuDanDacBietLotoComponent {
-  REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number';
+  REQUEST_STATISTIC_TODAY = 'api/v1/date-multi-values';
   REQUEST_STATISTIC = 'api/v1/statistic';
-  isShowSearch = false
-  listSo = Array.from({ length: 10 }, (_, i) => {
-    const value = 10 + i * 5;
-    return { label: value, value: value, key: value };
-  });
+  isShowSearch = false;
+  listSo = [
+    {
+      label: 2,
+      value: 2,
+      key: 2
+    },
+    {
+      label: 3,
+      value: 3,
+      key: 3
+    }
+  ];
   startDate = new Date('2010-01-01');
   endDate = new Date(Date.now() - 86400000);
   minDate: any;
@@ -26,6 +34,7 @@ export class TraCuuDanDacBietLotoComponent {
   quantity: any;
   listQuantity: any;
   data: any;
+  isConcurOccur = false;
   plugins = new Plugins();
   isLoading = false;
   constructor(
@@ -34,13 +43,14 @@ export class TraCuuDanDacBietLotoComponent {
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
+    this.searchStatistic();
   }
   searchStatisticsTodayNumber() {
     this.isLoading = true;
     const payload = {
       quantity: this.quantity ? this.quantity.value : ''
     };
-    this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '').subscribe(
+    this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '/statistic-today-number').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code == 200) {
           this.isLoading = false;
@@ -76,9 +86,10 @@ export class TraCuuDanDacBietLotoComponent {
             .trim()
             .split(',')
             .map((item: any) => +item)
-        : ''
+        : '',
+      concurOccur: this.isConcurOccur ? 1 : 0
     };
-    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe(
+    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '/statistic').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
           this.isLoading = false;
