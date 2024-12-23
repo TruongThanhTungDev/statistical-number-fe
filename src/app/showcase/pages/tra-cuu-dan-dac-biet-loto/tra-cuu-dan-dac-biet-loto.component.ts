@@ -81,7 +81,7 @@ export class TraCuuDanDacBietLotoComponent {
     const payload = {
       startDate: this.startDate ? +moment(this.startDate).format('YYYYMMDD') : '',
       endDate: this.endDate ? +moment(this.endDate).format('YYYYMMDD') : '',
-      data: this.listQuantity
+      values: this.listQuantity
         ? this.listQuantity
             .trim()
             .split(',')
@@ -89,7 +89,7 @@ export class TraCuuDanDacBietLotoComponent {
         : '',
       concurOccur: this.isConcurOccur ? 1 : 0
     };
-    this.apiService.postOption(this.REQUEST_STATISTIC, payload, '/statistic').subscribe(
+    this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '/statistic').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
           this.isLoading = false;

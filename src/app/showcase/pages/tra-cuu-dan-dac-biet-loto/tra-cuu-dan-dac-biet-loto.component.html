@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="flex gap-2 align-items-center">
-          <div for="find-start">Đồng bộ</div>
+          <div for="find-start">Đồng thời</div>
           <p-toggleButton [(ngModel)]="isConcurOccur" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatistic()"/>
         </div>
       </div>
@@ -103,7 +103,6 @@
               cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span>
               đến
               <span class="font-bold text-primary">{{data.maxEndDate}}</span>
-              (giải đặc biệt - {{data.maxEndValue}})
             </div>
             <div>
               Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
@@ -182,6 +181,11 @@
             kiếm</button>
         </div>
       </div>
+      <div class="flex gap-2 align-items-center">
+        <div for="find-start">Đồng thời</div>
+        <p-toggleButton [(ngModel)]="isConcurOccur" id="find-start" name="find-start" onLabel="On" offLabel="Off"
+          (ngModelChange)="searchStatistic()" />
+      </div>
     </p-sidebar>
   </div>
   <div class="flex gap-4 container-body">
@@ -229,15 +233,13 @@
             </div>
             <div>
               <span class="font-bold text-danger-2">Ngưỡng cực đại không xuất hiện dàn số là {{data.maxGap}} ngày</span> (kể
-              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span> (giải đặc biệt -
-              {{data.maxStartValue}})
+              cả ngày về), từ <span class="font-bold text-primary">{{data.maxStartDate}}</span>
               đến
               <span class="font-bold text-primary">{{data.maxEndDate}}</span>
-              (giải đặc biệt - {{data.maxEndValue}})
             </div>
             <div>
               Lần xuất hiện sau cùng của 1 số thuộc dàn trong khoảng ngày bạn chọn là <span
-                class="font-bold text-primary">{{data.duringDate}}</span> (giải đặc biệt - {{data.duringValue}})
+                class="font-bold text-primary">{{data.duringDate}}</span>
             </div>
             <div>
               Điểm gan đến nay là: <span class="font-bold text-danger-2">{{data.stubbornnessLevel}}</span> ngày (Không tính
