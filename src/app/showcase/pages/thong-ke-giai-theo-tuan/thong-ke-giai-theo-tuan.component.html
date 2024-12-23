@@ -20,8 +20,13 @@
                 [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
             </div>
           </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="find-start">Tìm kiếm theo hai số đầu</div>
+            <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off"
+              (ngModelChange)="getDataFrequency()" />
+          </div>
           <div>
-            <button pRipple (click)="getAllDataV2(true)"
+            <button pRipple (click)="getDataFrequency()"
               class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
               kiếm</button>
           </div>
@@ -32,7 +37,7 @@
       <div class="w-full p-3 bg-warning rounded-6 fz-4 mb-4 text-center font-bold">
         Thống kê từ ngày {{plugins.formatDate(startDate)}} đến ngày {{plugins.formatDate(endDate)}}
       </div>
-      <div class="overflow-x-auto w-full">
+      <div *ngIf="!isLoading" class="overflow-x-auto w-full">
         <table class="border-1 border-gray-200 w-full" style="min-width: 1200px">
           <tr class="border-bottom-1 border-gray-200">
             <td *ngFor="let item of dataFrequency.slice(0,20)" class="p-2 font-bold border-right-1 border-gray-200">
@@ -60,6 +65,17 @@
             </td>
           </tr>
         </table>
+      </div>
+      <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
+        <p-skeleton size="5rem" />
       </div>
       <div *ngIf="!isLoading && listData.length" class="content-scroll flex flex-column gap-4">
         <div *ngFor="let week of listData" class="flex flex-column gap-2">
@@ -96,7 +112,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
+      <!-- <div *ngIf="isLoading" class="flex gap-4 flex-wrap">
         <p-skeleton size="10rem" />
         <p-skeleton size="10rem" />
         <p-skeleton size="10rem" />
@@ -107,7 +123,7 @@
         <p-skeleton size="10rem" />
         <p-skeleton size="10rem" />
         <p-skeleton size="10rem" />
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -120,7 +136,7 @@
         <div class="flex justify-content-between mb-4">
           <div class="text-secondary font-bold">Hủy</div>
           <div class="font-bold">Tìm kiếm</div>
-          <div><i class="pi pi-search" (click)="getAllDataV2(true)"></i></div>
+          <div><i class="pi pi-search" (click)="getDataFrequency()"></i></div>
         </div>
       </ng-template>
       <div class="flex flex-column gap-4">
@@ -138,8 +154,13 @@
               [minDate]="minDate" (onSelect)="selectEndDate($event)" placeholder="Chọn ngày" />
           </div>
         </div>
+        <div class="flex gap-2 align-items-center">
+          <div for="find-start">Tìm kiếm theo hai số đầu</div>
+          <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off"
+            (ngModelChange)="getDataFrequency()" />
+        </div>
         <div>
-          <button pRipple (click)="getAllDataV2(true)"
+          <button pRipple (click)="getDataFrequency()"
             class="w-full p-3 bg-warning rounded-6 fz-4 active:bg-yellow-500 hover:bg-yellow-500 transition-all transition-duration-300 cursor-pointer mb-2">Tìm
             kiếm</button>
         </div>

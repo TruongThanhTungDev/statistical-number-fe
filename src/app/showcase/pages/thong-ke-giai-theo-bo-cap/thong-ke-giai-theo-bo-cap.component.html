@@ -240,7 +240,7 @@
         </div>
         <div class="flex gap-2 align-items-center">
           <div for="find-start">Tìm kiếm theo hai số đầu</div>
-          <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" />
+          <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="getData()"/>
         </div>
         <div>
           <button pRipple (click)="getData()"

@@ -50,7 +50,7 @@ export class ThongKeGiaiTheoTuanComponent {
   ) {}
   ngOnInit(): void {
     // this.getAllData();
-    this.getAllDataV2();
+    // this.getAllDataV2();
     this.getDataFrequency();
     this.scrollHeight = this.plugins.calculateScrollHeight(-20);
   }
@@ -158,14 +158,16 @@ export class ThongKeGiaiTheoTuanComponent {
     return result;
   }
   getDataFrequency() {
-    // this.isLoading = true
+    this.isLoading = true
     const payload = {
       startDate: this.startDate ? moment(this.startDate).format('YYYYMMDD') : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 1)).format('YYYYMMDD'),
       endDate: this.endDate ? moment(this.endDate).format('YYYYMMDD') : moment(new Date()).format('YYYYMMDD'),
       head: this.isHead ? 1 : 0
     };
+    this.dataFrequency = []
     this.apiService.postOption(this.REQUEST_URL_V3, payload, '').subscribe((res: HttpResponse<any>) => {
       if (res.body.code === 200) {
+        this.isLoading = false
         const data = Object.keys(res.body.result).map((item) => ({
           number: item,
           value: res.body.result[item]
@@ -184,6 +186,9 @@ export class ThongKeGiaiTheoTuanComponent {
             });
           }
         })
+      } else {
+        this.isLoading = false;
+        this.dataFrequency = []
       }
     });
   }
