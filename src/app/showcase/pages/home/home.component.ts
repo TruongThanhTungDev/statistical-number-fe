@@ -13,7 +13,9 @@ import { ActivatedRoute } from "@angular/router";
 export class HomeComponent implements OnInit {
   REQUEST_STATISTIC_TODAY = 'api/v1/statistic-today-number';
   REQUEST_STATISTIC = 'api/v1/statistic';
-  isShowSearch = false
+  isShowSearch = false;
+  isHead = false
+  isHead1 = false                   
   soCoDinhList: any[] = [
     {
       key: '0',
@@ -111,7 +113,8 @@ export class HomeComponent implements OnInit {
   searchStatisticsTodayNumber() {
     this.isLoading = true;
     const payload = {
-      quantity: this.quantity ? this.quantity.value : ''
+      quantity: this.quantity ? this.quantity.value : '',
+      head: this.isHead ? 1 : 0
     };
     this.apiService.postOption(this.REQUEST_STATISTIC_TODAY, payload, '').subscribe(
       (res: HttpResponse<any>) => {
@@ -149,7 +152,8 @@ export class HomeComponent implements OnInit {
             .trim()
             .split(',')
             .map((item: any) => +item)
-        : ''
+        : '',
+      head: this.isHead1 ? 1 : 0
     };
     this.apiService.postOption(this.REQUEST_STATISTIC, payload, '').subscribe(
       (res: HttpResponse<any>) => {
@@ -187,11 +191,11 @@ export class HomeComponent implements OnInit {
     this.maxDate = event;
   }
 
-  quickSave(){
+  quickSave() {
     this.isLoading = true;
     let payload = {
       data: this.listQuantity,
-      isActive : 1,
+      isActive: 1,
       startDate: this.plugins.formatDateWithType(this.data.startDate, 'DD-MM-YYYY', 'YYYYMMDD'),
       endDate: this.plugins.formatDateWithType(this.data.endDate, 'DD-MM-YYYY', 'YYYYMMDD'),
       maxStartDate: this.plugins.formatDateWithType(this.data.maxStartDate, 'DD-MM-YYYY', 'YYYYMMDD'),
@@ -201,14 +205,14 @@ export class HomeComponent implements OnInit {
       date: moment().format('YYYYMMDD'),
       stubbornnessLevel: this.data.stubbornnessLevel,
       quantity: this.listQuantity
-      ? this.listQuantity
-          .trim()
-          .split(',')
-          .map((item: any) => +item).length
-      : 0,
+        ? this.listQuantity
+            .trim()
+            .split(',')
+            .map((item: any) => +item).length
+        : 0,
       status: 2
-    }
-    this.apiService.postOption("api/v1/date-values-history", payload, '/create').subscribe(
+    };
+    this.apiService.postOption('api/v1/date-values-history', payload, '/create').subscribe(
       (res: HttpResponse<any>) => {
         if (res.body.code === 200) {
           this.isLoading = false;

@@ -11,6 +11,10 @@
               <label for="fixNumber">Thống kê dàn số theo ngày</label>
               <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listSo" placeholder="Chọn số"
                 [(ngModel)]="quantity" />
+              <div class="flex gap-2 align-items-center">
+                <div for="find-start">Tìm kiếm theo hai số đầu</div>
+                <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatisticsTodayNumber()"/>
+              </div>
             </div>
           </div>
           <div>
@@ -42,6 +46,10 @@
               <label for="fixNumber">Dàn đặc biệt muốn thống kê</label>
               <textarea rows="5" cols="30" placeholder="Ví dụ: 1,2,3,4,5" pInputTextarea [(ngModel)]="listQuantity"></textarea>
             </div>
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div for="find-start">Tìm kiếm theo hai số đầu</div>
+            <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatistic()"/>
           </div>
           <div>
             <button pRipple (click)="searchStatistic()"
@@ -145,6 +153,10 @@
             <label for="fixNumber">Thống kê dàn số theo ngày</label>
             <p-treeSelect class="w-full" containerStyleClass="w-full" [options]="listSo" placeholder="Chọn số"
               [(ngModel)]="quantity" />
+            <div class="flex gap-2 align-items-center">
+              <div for="find-start">Tìm kiếm theo hai số đầu</div>
+              <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatisticsTodayNumber()"/>
+            </div>
           </div>
         </div>
         <div>
@@ -174,6 +186,10 @@
             <textarea rows="5" cols="30" placeholder="Ví dụ: 1,2,3,4,5" pInputTextarea
               [(ngModel)]="listQuantity"></textarea>
           </div>
+        </div>
+        <div class="flex gap-2 align-items-center">
+          <div for="find-start">Tìm kiếm theo hai số đầu</div>
+          <p-toggleButton [(ngModel)]="isHead" id="find-start" name="find-start" onLabel="On" offLabel="Off" (ngModelChange)="searchStatistic()"/>
         </div>
         <div>
           <button pRipple (click)="searchStatistic()"

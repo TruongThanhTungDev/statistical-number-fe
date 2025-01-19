@@ -24,6 +24,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
   first = 0;
   size = 15;
   totalItems = 0;
+  isHead = false
   listQuantity = Array.from({ length: 9 }, (_, i) => {
     const value = 30 + i * 5;
     return { label: value, value: value, key: value };
@@ -55,6 +56,7 @@ export class ThongKeDanTheoNgayComponent implements OnInit {
     if (this.quantity) arr.push(`quantity==${this.quantity.value}`);
     if (this.startDate) arr.push(`date>=${+moment(this.startDate).format('YYYYMMDD')}`);
     if (this.endDate) arr.push(`date<=${+moment(this.endDate).format('YYYYMMDD')}`);
+    arr.push(`head==${this.isHead ? 1 : 0}`)
     return arr.join(';');
   }
   searchThongKeDanTheoNgay() {
